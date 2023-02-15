@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class PetType extends Model
 {
     use HasFactory;
 
-    protected $table = 'users';
+    protected $table = 'pet_types';
     protected $primaryKey = 'id';
 
     public function pet()
     {
-        return $this->hasOne(Pet::class, "user_id");
+        return $this->belongsTo(Pet::class, "pet_type_id");
     }
-
 }
