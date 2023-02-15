@@ -1,0 +1,36 @@
+﻿<Window x:Class="Febogotchi_administration.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Febogotchi_administration"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="600">
+    <ScrollViewer>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Column="0" >
+            <Label Content="Febagochi adminisztrációs felület" HorizontalAlignment="Center" FontSize="34" FontWeight="Bold"/>
+            <Label Content="Új lény felvétele:" Margin="0,20,0,0" HorizontalAlignment="Center" FontSize="24" />
+            <Button Content="Felvétel" Width="200" HorizontalAlignment="Center" FontSize="24" Name="NewEntity" Click="NewEntity_Click"/>
+            <Label Content="Felhasználó konfigurációja" Margin="0,15,0,0" HorizontalAlignment="Center" FontSize="24"/>
+            <Button Content="Konfigurálás" Width="200" HorizontalAlignment="Center" FontSize="24" Name="UserNewPassword" Click="UserNewPassword_Click"/>
+            <Label Content="Felhasználó törlése" Margin="0,15,0,0" HorizontalAlignment="Center" FontSize="24"/>
+            <Button Content="Törlés" Width="200" HorizontalAlignment="Center" FontSize="24" Name="UserDelete"/>
+            
+        </StackPanel>
+        
+        <!--<StackPanel Orientation="Horizontal" Grid.Row="2">
+            <Label Content="Felhasználó neve:" Margin="0,0,10,0"/>
+            <TextBox Name="Username" Width="125"/>
+        </StackPanel>-->
+    </Grid>
+    </ScrollViewer>
+</Window>
