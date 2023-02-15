@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Febogotchi_administration"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="600">
+        Title="Admin felület" Height="450" Width="600">
     <ScrollViewer>
     <Grid>
         <Grid.ColumnDefinitions>
