@@ -56,7 +56,7 @@ namespace Febogotchi_administration
         public void UserDataChange()
         {
             ClearGrid();
-            AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(25, GridUnitType.Pixel) });
+            AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30, GridUnitType.Pixel) });
             AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(40, GridUnitType.Pixel) });
             AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(45, GridUnitType.Pixel) });
             AdministrationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
@@ -113,8 +113,16 @@ namespace Febogotchi_administration
             //check if user exists
             //if exists -> show ShowUserModifiableData
             //if not-> show UserDataChange
-            _username.Content = UserName.Text;
-            ShowUserModifiableData();
+            if (UserName.Text!="")
+            {
+                _username.Content = UserName.Text;
+                ShowUserModifiableData();
+            }
+            else
+            {
+                MessageBox.Show($"Nem lehet üresen hagyni!", "Hibás felhasználónév!");
+            }
+           
         }
         private void ShowUserModifiableData()
         {
