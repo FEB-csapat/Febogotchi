@@ -21,12 +21,14 @@ class PetResource extends JsonResource
             
             'name' => $this->name,
             'age' => $this->age,
-            'happines' => $this->happines,
+            'happiness' => $this->happiness,
             'wellbeing' => $this->wellbeing,
             'fittness' => $this->fittness,
-            'thirst' => $this->thirst,
-            'hunger' => $this->hunger,
+            'sate' => $this->sate,
+            'energy' => $this->energy,
             'birth_date' => $this->birth_date,
+
+            'is_alive' => $this->is_alive,
 
          //   'created_at' => $this->created_at,
          //   'updated_at' => $this->updated_at

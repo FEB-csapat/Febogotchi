@@ -21,11 +21,14 @@ return new class extends Migration
 
             $table->string('name');
             $table->integer('age')->default('0');
-            $table->integer('happines')->default('5');
+            
+            $table->integer('happiness')->default('5');
             $table->integer('wellbeing')->default('5');
             $table->integer('fittness')->default('5');
-            $table->integer('thirst')->default('5');
-            $table->integer('hunger')->default('5');
+            $table->integer('sate')->default('5');
+            $table->integer('energy')->default('5');
+
+            $table->boolean('is_alive')->default(true);
 
             $table->date('birth_date')->default(Carbon::now());
             $table->timestamps();

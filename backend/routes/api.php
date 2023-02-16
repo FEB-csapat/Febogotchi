@@ -4,6 +4,7 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\PetTypeController;
+use App\Http\Controllers\ActionController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -68,4 +69,11 @@ Route::get('/pet_types', [PetTypeController:: class, "index"])
 
 Route::get('/pet_types/{id}', [PetTypeController:: class, "show"])
     ->name("pet_types.show");
+
+
+/*
+* API routes for pet action
+*/
+Route::put('/pets/{id}/action', [ActionController:: class, "update"])
+->name("action.update");
 
