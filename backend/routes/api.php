@@ -5,6 +5,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\PetTypeController;
 use App\Http\Controllers\ActionController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AuthController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,8 +22,51 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+/*
+* API routes for auth
+*/
+//Route::get('/register', [RegisterController:: class, "create"])
+//    ->name("register.create");
+
+Route::get('/register', [RegisterController:: class, "store"])
+    ->name("register.store");
+
+
+Route::get('/login', [AuthController:: class, "login"])
+    ->name("auth.login");
+
+Route::post('/authenticate', [AuthController:: class, "authenticate"])
+    ->name("auth.authenticate");
+
+Route::post('/logout', [AuthController:: class, "logout"])
+    ->name("auth.logout");
+
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/me/pets', [PetController:: class, "index"])
+        ->name("pets.index");
+
+    Route::get('/me/pets/{id}', [PetController:: class, "show"])
+        ->name("pets.show");
+
+    Route::post('/me/pets', [PetController:: class, "store"])
+        ->name("pets.store");
+
+    Route::put('/me/pets/{id}', [PetController:: class, "update"])
+        ->name("pets.update");
+
+    Route::delete('/me/pets/{id}', [PetController:: class, "destroy"])
+        ->name("pets.destroy");
+
+    Route::put('/me/pets/{id}/action', [ActionController:: class, "update"])
+        ->name("action.update");
 });
 
 
