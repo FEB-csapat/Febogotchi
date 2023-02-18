@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
+    // TODO rename store to create
     public function store(StoreRegisterRequest $request)
     {
         $data = $request->validated();

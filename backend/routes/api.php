@@ -29,12 +29,13 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/register', [RegisterController:: class, "create"])
 //    ->name("register.create");
 
-Route::get('/register', [RegisterController:: class, "store"])
+Route::post('/register', [RegisterController:: class, "store"])
     ->name("register.store");
 
-
+/*
 Route::get('/login', [AuthController:: class, "login"])
     ->name("auth.login");
+    */
 
 Route::post('/authenticate', [AuthController:: class, "authenticate"])
     ->name("auth.authenticate");
@@ -50,20 +51,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/me/pets', [PetController:: class, "index"])
-        ->name("pets.index");
+    Route::get('/me/pets', [MeController:: class, "indexPets"])
+        ->name("me.pets.index");
 
-    Route::get('/me/pets/{id}', [PetController:: class, "show"])
-        ->name("pets.show");
+    Route::get('/me/pets/{id}', [MeController:: class, "showPet"])
+        ->name("me.pets.show");
 
-    Route::post('/me/pets', [PetController:: class, "store"])
-        ->name("pets.store");
+    Route::post('/me/pets', [MeController:: class, "storePet"])
+        ->name("me.pets.store");
 
-    Route::put('/me/pets/{id}', [PetController:: class, "update"])
-        ->name("pets.update");
+    Route::put('/me/pets/{id}', [MeController:: class, "updatePet"])
+        ->name("me.pets.update");
 
-    Route::delete('/me/pets/{id}', [PetController:: class, "destroy"])
-        ->name("pets.destroy");
+    Route::delete('/me/pets/{id}', [MeController:: class, "destroyPet"])
+        ->name("me.pets.destroy");
 
     Route::put('/me/pets/{id}/action', [ActionController:: class, "update"])
         ->name("action.update");
