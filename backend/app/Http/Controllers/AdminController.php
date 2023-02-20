@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PetResource;
+use App\Http\Resources\UserResource;
 use App\Models\Pet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePetRequest;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 
-class MeController extends Controller
+class AdminController extends Controller
 {
 
     /**
@@ -19,20 +23,9 @@ class MeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:api', 'role:user|admin']);
+        $this->middleware(['auth:api', 'role:admin']);
     }
 
-
-    /**
-     * Display a listing of the pets.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexPets(Request $request)
-    {
-        $pets = $request->user()->pets()->get();
-        return PetResource::collection($pets);
-    }
 
     /**
      * Store a newly created pet in storage.
@@ -43,21 +36,8 @@ class MeController extends Controller
     public function storePet(StorePetRequest $request)
     {
         $data = $request->validated();
-        $data["user_id"] = $request->user()->id;
         $newPet = Pet::create($data);
         return new PetResource($newPet);
-    }
-
-    /**
-     * Display the specified pet.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showPet(Request $request, $id)
-    {
-        $pet = $request->user()->pets()->findOrFail($id);
-        return new PetResource($pet);
     }
 
     /**
@@ -71,7 +51,6 @@ class MeController extends Controller
     {
         $data = $request->validated();
         $pet = Pet::findOrFail($id);
-        $pet->updated_at = Carbon::now()->format('Y-m-d H:i:s');
         if($pet->update($data)){
             return new PetResource($pet);
         }
@@ -85,11 +64,10 @@ class MeController extends Controller
      */
     public function destroyPet(Request $request, $id)
     {
-        $pet = $request->user()->pets()->findOrFail($id);
+        $pet = Pet::all()->findOrFail($id);
         $pet->delete();
     }
 
-    
     /**
      * Perform action by pet
      *
@@ -99,7 +77,6 @@ class MeController extends Controller
     public function actionPet(Request $request, $id)
     {
         $pet = $request->user()->pets()->findOrFail($id);
-        
         
         $result = json_decode($request->getContent(), true);
 
@@ -125,5 +102,52 @@ class MeController extends Controller
                 break;
         }
         return new PetResource($pet);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  App\Http\Requests\StoreUserRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeUser(StoreUserRequest $request)
+    {
+        $data = $request->validated();
+        $request['password'] = Hash::make($request['password']);
+        $newUser = User::create($data);
+        $newUser->assignUserRole();
+        return new UserResource($newUser);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\UpdateUserRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateUser(UpdateUserRequest $request, $id)
+    {
+        $data = $request->validated();
+        $user = User::findOrFail($id);
+        $user->updated_at = Carbon::now()->format('Y-m-d H:i:s');
+        if($user->update($data)){
+            return new UserResource($user);
+        }
+    }
+
+    /**
+     * Remove the specified user from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyUser(Request $request, $id)
+    {
+        if($id == $request->user()->id){
+            abort(403, "Cannot delete admin");
+        }
+        $user = User::all()->findOrFail($id);
+        $user->delete();
     }
 }

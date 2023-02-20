@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Pet extends Model
 {
@@ -12,13 +13,33 @@ class Pet extends Model
     protected $table = 'pets';
     protected $primaryKey = 'id';
 
+    protected $now;
+
     protected $casts = [
         'is_alive' => 'boolean',
     ];
+    protected $fillable = [
+        'name', 'pet_type_id', 'user_id'
+    ];
+
+    protected $attributes = array(
+        'age' => 0,
+        'happiness' => 5,
+        'wellbeing' => 5,
+        'fittness' => 5,
+        'sate' => 5,
+        'energy' => 5,
+        'is_alive' => true
+    );
+    
+    public function __construct()
+    {
+        $this->attributes['birth_date'] =  Carbon::now();
+    }
 
     public function user()
     {
-        return $this->belongsTo(User::class, "user_id", "pet_id");
+        return $this->belongsTo(User::class, /*"user_id",*/ "pet_id");
     }
 
     public function petType()
@@ -108,6 +129,7 @@ class Pet extends Model
         $this->addHappiness(2);
         $this->addWellbeing(2);
         $this->addFittness(1);
+        $this->addEnergy(-4);
 
         $this->save();
     }

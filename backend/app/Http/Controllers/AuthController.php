@@ -5,37 +5,69 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AuthenticateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+
 class AuthController extends Controller
 {
-    
-    public function authenticate(AuthenticateRequest $request)
-    {
-        $data = $request->validated();
 
-        if(Auth::attempt($data)){
-            // successful login 
-           // $request->session()->regenerate();
-            
-            $token = Auth::user()->createToken('auth_token')->plainTextToken;
-
-            return response()->json([
-                "data" => ["token"=>$token]
-            ],200);
+    public function register (Request $request) {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:20',
+            'password' => 'required|string|min:5|max:255',
+        ]);
+        if ($validator->fails())
+        {
+            return response(['errors'=>$validator->errors()->all()], 422);
         }
-        else{
-            // unsuccessful login 
-            return  response()->json([
-                "data"=>["message"=>"Sikertelen belépés"]
-            ],401);
-            
+
+        $request['password'] = Hash::make($request['password']);
+        
+        $user = User::create($request->toArray());
+        $user->assignUserRole();
+
+        $token = $user->createToken('auth_token')->accessToken;
+        $response = ['token' => $token];
+        return response($response, 200);
+    }
+
+    public function login(AuthenticateRequest $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "name" => "required|string|min:4|max:20",
+            "password" => "required|string|min:5|max:255"
+        ]);
+        
+
+        if ($validator->fails())
+        {
+            return response(['errors'=>$validator->errors()->all()], 422);
+        }
+
+        $user = User::where('name', $request->name)->first();
+
+        if ($user) {
+            if (Hash::check($request->password, $user->password)) {
+                $token = $user->createToken('auth_token')->accessToken;
+                $response = ['token' => $token];
+                return response($response, 200);
+            } else {
+                $response = ["message" => "Password mismatch"];
+                return response($response, 422);
+            }
+        } else {
+            $response = ["message" =>'User does not exist'];
+            return response($response, 422);
         }
     }
 
     public function logout(Request $request)
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect()->route('home')->with('success',"Sikeres kiejelentkezés.");
+        $token = $request->user()->token();
+        $token->revoke();
+        $response = ['message' => 'You have been successfully logged out!'];
+
+        return response($response, 200);
     }
 }

@@ -14,6 +14,6 @@ class PetType extends Model
 
     public function pet()
     {
-        return $this->belongsTo(Pet::class, "pet_type_id");
+        return $this->belongsToMany(Pet::class, "pet_type_id");
     }
 }
