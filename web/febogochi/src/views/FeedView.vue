@@ -6,6 +6,7 @@
             </div>
         </div>
         <div class="row mb-2 bg-secondary">
+            
             <div class="col-4 bg-secondary bg-opacity-50">Csirke (x3)</div>
         </div>
         <div class="row">
@@ -24,7 +25,11 @@
     </div>
 </template>
 <script>
+import FoodCard from '../components/FoodCard.Vue';
 export default{
-    name: "FeedView"
+    name: "FeedView",
+    components:{
+        FoodCard
+    }
 }
 </script>
