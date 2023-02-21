@@ -44,7 +44,7 @@ class Pet extends Model
 
     public function petType()
     {
-        return $this->hasOne(PetType::class, "pet_id");
+    return $this->belongsTo(PetType::class, /*"pet_id"*/);
     }
 
     public function updateModel($daysPassed){

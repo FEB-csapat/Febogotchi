@@ -21,6 +21,8 @@ return new class extends Migration
 
             $table->string('name');
             $table->integer('age')->default('0');
+
+            $table->enum('status', ["idle", "hunt", "play", "cure", "eat", "sleep"]);
             
             $table->integer('happiness')->default('5');
             $table->integer('wellbeing')->default('5');

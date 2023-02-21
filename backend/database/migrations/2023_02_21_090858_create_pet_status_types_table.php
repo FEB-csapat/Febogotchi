@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pet_types', function (Blueprint $table) {
-            $table->integer("id");
-          //  $table->foreignId('pet_id');
+        Schema::create('pet_status_types', function (Blueprint $table) {
+            $table->id();
 
-            $table->enum('type', ["dog_1", "dog_2", "cat_1", "cat_2"]);
+            $table->enum('status', ["idle", "hunt", "play", "cure", "eat", "sleep"]);
+            $table->time('duration');
 
+            
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pet_types');
+        Schema::dropIfExists('pet_status_types');
     }
 };

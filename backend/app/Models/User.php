@@ -22,7 +22,7 @@ class User extends Authenticatable
         $this->assignRole(Role::firstOrCreate(['name' => 'user']));
     }
 
-    public function setAdminRole()
+    public function assignAdminRole()
     {
         $this->assignRole(Role::firstOrCreate(['name' => 'admin']));
     }

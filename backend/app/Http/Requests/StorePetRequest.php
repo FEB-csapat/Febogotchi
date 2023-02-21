@@ -25,10 +25,8 @@ class StorePetRequest extends FormRequest
     public function rules()
     {
         return [
-            
-
           //  'user' => (new UserResource($this->user))
-            'pet_type_id' => "required|numeric",
+            'pet_type_id' => "required|numeric|exists:pet_types,id",
             
             'name' => "required|min:2|max:20",
         ];

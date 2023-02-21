@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PetResource;
 use App\Models\Pet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePetRequest;
 use Illuminate\Support\Carbon;
 

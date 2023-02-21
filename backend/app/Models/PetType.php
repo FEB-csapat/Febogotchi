@@ -12,8 +12,8 @@ class PetType extends Model
     protected $table = 'pet_types';
     protected $primaryKey = 'id';
 
-    public function pet()
+    public function pets()
     {
-        return $this->belongsToMany(Pet::class, "pet_type_id");
+        return $this->hasMany(Pet::class, "pet_type_id");
     }
 }

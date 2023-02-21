@@ -17,8 +17,7 @@ class PetTypeResource extends JsonResource
         return [
             'id' => $this->id,
            // 'pet' => (new PetResource($this->whenLoaded('pet')))
-            'image_path' => $this->image_path,
-            'status' => $this->status,
+            'type' => $this->type
           //  'created_at' => $this->created_at,
           //  'updated_at' => $this->updated_at
         ];
