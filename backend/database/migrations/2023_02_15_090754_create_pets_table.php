@@ -19,11 +19,12 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->foreignId('pet_type_id');
 
+            $table->foreignId('pet_status_id')->default('1');
+            $table->date('status_start')->nullable();
+
             $table->string('name');
             $table->integer('age')->default('0');
 
-            $table->enum('status', ["idle", "hunt", "play", "cure", "eat", "sleep"]);
-            
             $table->integer('happiness')->default('5');
             $table->integer('wellbeing')->default('5');
             $table->integer('fittness')->default('5');

@@ -20,7 +20,7 @@ class PetsTableSeeder extends Seeder
         DB::table('pets')->insert([
             'user_id' => 1,
             'pet_type_id' => 1,
-            'status' => "idle",
+            'pet_status_id' => 1,
             'name' => "Buksi",
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')

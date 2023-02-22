@@ -14,10 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pet_statuses', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('pet_status_type_id');
-            $table->date('start');
-            
+            $table->integer('id');
+
+            $table->enum('status', [
+                "idle", "hunt", "play", "cure", "eat", "sleep"
+            ]);
+            $table->time('duration')->nullable();
 
             $table->timestamps();
         });

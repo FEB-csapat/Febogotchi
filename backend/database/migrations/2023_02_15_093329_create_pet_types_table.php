@@ -15,8 +15,6 @@ return new class extends Migration
     {
         Schema::create('pet_types', function (Blueprint $table) {
             $table->integer("id");
-          //  $table->foreignId('pet_id');
-
             $table->enum('type', ["dog_1", "dog_2", "cat_1", "cat_2"]);
 
             $table->timestamps();
