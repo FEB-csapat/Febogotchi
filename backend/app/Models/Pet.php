@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
+use App\Jobs\ProcessPodcast;
+use App\Jobs\StatusTimer;
 
 class Pet extends Model
 {
@@ -12,18 +15,44 @@ class Pet extends Model
     protected $table = 'pets';
     protected $primaryKey = 'id';
 
+    protected $now;
+
     protected $casts = [
         'is_alive' => 'boolean',
     ];
+    protected $fillable = [
+        'name', 'pet_type_id', 'user_id'
+    ];
+
+    protected $attributes = array(
+        'pet_status_id' => 1,
+        'age' => 0,
+        'happiness' => 5,
+        'wellbeing' => 5,
+        'fittness' => 5,
+        'sate' => 5,
+        'energy' => 5,
+        'is_alive' => true
+    );
+    
+    public function __construct()
+    {
+        $this->attributes['birth_date'] =  Carbon::now();
+    }
 
     public function user()
     {
-        return $this->belongsTo(User::class, "user_id", "pet_id");
+        return $this->belongsTo(User::class, /*"user_id",*/ "pet_id");
     }
 
     public function petType()
     {
-        return $this->hasOne(PetType::class, "pet_id");
+        return $this->belongsTo(PetType::class, /*"pet_id"*/);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(PetStatus::class, 'pet_status_id');
     }
 
     public function updateModel($daysPassed){
@@ -45,6 +74,15 @@ class Pet extends Model
         {
             $this->is_alive = false;
         }
+
+        $this->save();
+    }
+
+
+
+    public function resetToIdle(){
+        $this->pet_status_id = 1;
+        $this->status_start = null;
 
         $this->save();
     }
@@ -108,8 +146,16 @@ class Pet extends Model
         $this->addHappiness(2);
         $this->addWellbeing(2);
         $this->addFittness(1);
+        $this->addEnergy(-4);
+
+        $this->pet_status_id = 2;
+        $this->status_start = Carbon::now();
 
         $this->save();
+
+        StatusTimer::dispatch($this)->delay(now()->
+            addSeconds($this->status->duration->hour)
+        );      
     }
 
     public function play()
@@ -119,7 +165,14 @@ class Pet extends Model
         $this->addFittness(1);
         $this->addEnergy(-3);
 
+        $this->pet_status_id = 3;
+        $this->status_start = Carbon::now();
+
         $this->save();
+
+        StatusTimer::dispatch($this)->delay(now()->
+            addSeconds($this->status->duration->hour)
+        );
     }
 
     public function cure()
@@ -128,16 +181,14 @@ class Pet extends Model
         $this->addWellbeing(3);
         $this->addSate(-1);
 
-        $this->save();
-    }
-
-    public function sleep()
-    {
-        $this->addWellbeing(2);
-        $this->addEnergy(4);
-        $this->addSate(-2);
+        $this->pet_status_id = 4;
+        $this->status_start = Carbon::now();
 
         $this->save();
+
+        StatusTimer::dispatch($this)->delay(now()->
+            addSeconds($this->status->duration->hour)
+        );
     }
 
     public function eat()
@@ -147,7 +198,31 @@ class Pet extends Model
         $this->addSate(2);
         $this->addEnergy(1);
 
+        $this->pet_status_id = 5;
+        $this->status_start = Carbon::now();
+
         $this->save();
+
+        StatusTimer::dispatch($this)->delay(now()->
+            addSeconds($this->status->duration->hour)
+        );
     }
+
+    public function sleep()
+    {
+        $this->addWellbeing(2);
+        $this->addEnergy(4);
+        $this->addSate(-2);
+
+        $this->pet_status_id = 6;
+        $this->status_start = Carbon::now();
+
+        $this->save();
+
+        StatusTimer::dispatch($this)->delay(now()->
+            addSeconds($this->status->duration->hour)
+        );
+    }
+
     #endregion
 }

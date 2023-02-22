@@ -14,11 +14,13 @@ class PetResource extends JsonResource
      */
     public function toArray($request)
     {
+
         return [
             'id' => $this->id,
           //  'user' => (new UserResource($this->user))
-            'pet_type' => (new PetTypeResource($this->petType)),
-            
+            'type' => new PetTypeResource($this->petType),
+            'status' =>  new PetStatusResource($this->status),
+            'status_start' =>  $this->status_start,
             'name' => $this->name,
             'age' => $this->age,
             'happiness' => $this->happiness,

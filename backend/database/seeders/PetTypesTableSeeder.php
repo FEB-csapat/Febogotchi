@@ -16,9 +16,30 @@ class PetTypesTableSeeder extends Seeder
     public function run()
     {
         DB::table('pet_types')->insert([
-            'pet_id' => 1,
-            'image_path' => "placeholder",
-            'status' => "idle",
+            //'pet_id' => 1,
+            'id' => 1,
+            'type' => 'dog_1',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+        DB::table('pet_types')->insert([
+            //'pet_id' => 1,
+            'id' => 2,
+            'type' => 'dog_2',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+        DB::table('pet_types')->insert([
+            //'pet_id' => 1,
+            'id' => 3,
+            'type' => 'cat_1',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+        DB::table('pet_types')->insert([
+            //'pet_id' => 1,
+            'id' => 4,
+            'type' => 'cat_2',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);

@@ -21,7 +21,7 @@ class ActionController extends Controller
 
         $result = json_decode($request->getContent(), true);
 
-        switch($result['action']){
+        switch(strtolower($result['action'])){
             case 'hunt':
                 $pet->hunt();
                 break;
@@ -36,6 +36,9 @@ class ActionController extends Controller
                 break;
             case 'sleep':
                 $pet->sleep();
+                break;
+            default:
+                abort(422, "Unprocessable Entity");
                 break;
         }
         return new PetResource($pet);
