@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             PetsTableSeeder::class,
             PetTypesTableSeeder::class,
+            PetFoodSeeder::class,
+            PetToysSeeder::class,
             PetStatusTableSeeder::class
         ]);
     }
