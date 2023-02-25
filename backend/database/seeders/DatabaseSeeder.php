@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
             PetTypesTableSeeder::class,
             PetFoodSeeder::class,
             PetToysSeeder::class,
+            PetStatusTableSeeder::class
         ]);
     }
 }

@@ -16,8 +16,9 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'pet' => (new PetResource($this->pet)),
+            'pets' => PetResource::collection($this->pets),
             'name' => $this->name,
+            'roles' => $this->getRoleNames(),
           //  'created_at' => $this->created_at,
           //  'updated_at' => $this->updated_at
         ];
