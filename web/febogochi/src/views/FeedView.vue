@@ -25,11 +25,7 @@
     </div>
 </template>
 <script>
-import FoodCard from '../components/FoodCard.Vue';
 export default{
-    name: "FeedView",
-    components:{
-        FoodCard
-    }
+    name: "FeedView"
 }
 </script>
