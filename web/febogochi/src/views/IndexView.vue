@@ -10,7 +10,7 @@
             </div>
 
             <div class="col-3">
-                <input type="button" class="btn btn-primary w-100" value="Alszik" to:>
+                <input type="button" class="btn btn-primary w-100" value="Alszik">
             </div>
 
             <div class="col-3">
@@ -63,7 +63,20 @@
 </template>
 
 <script>
+import {FetchHelper} from '../utils/https.mjs';
 export default{
-    name: "IndexView"
+    name: "IndexView",
+    data(){
+        users: []        
+    },
+    methods:{
+        getData(){
+            
+        }
+    },
+    mounted(){
+    let asd = new FetchHelper("asd");
+    console.log(asd.http.getAllUsers());
+    }
 }
 </script>
