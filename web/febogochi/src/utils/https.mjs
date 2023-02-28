@@ -1,18 +1,19 @@
 import axios from "axios";
 
-export default class FetchHelper{
-    baseUrl = "http://localhost:8881/api/";
+export class FetchHelper{
+    static baseUrl = "http://localhost:8881/api/";
     
-    http;
-    constructor(param){
-        this.http= axios.create({
+    static http;
+
+    static initialize(param){
+        FetchHelper.http = axios.create({
             baseURL: this.baseUrl,
             headers: {'Authorization':"Bearer" + param}
         })
-    };
+    }
 
-    async getAllUsers(){
-        const response = await this.http.get("users");
-        return response;
+    static async getAllUsers(){
+        const response = await FetchHelper.http.get("users");
+        return response.data;
     };
 }

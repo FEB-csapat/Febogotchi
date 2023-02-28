@@ -56,27 +56,30 @@
 
             </div>
             <div class="col-3">
-                <input type="button" class="btn btn-danger w-100" value="Kijelentkezés">
+                <input type="button" class="btn btn-danger w-100" value="Kijelentkezés" @click="getData()">
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import {FetchHelper} from '../utils/https.mjs';
+import { FetchHelper } from '../utils/https.mjs';
 export default{
     name: "IndexView",
     data(){
-        users: []        
+        return{
+            valasz: []
+        }      
     },
     methods:{
         getData(){
             
+            console.log(this.valasz[0]);
         }
     },
-    mounted(){
-    let asd = new FetchHelper("asd");
-    console.log(asd.http.getAllUsers());
+    async mounted(){
+        FetchHelper.initialize("asd");
+        this.valasz = await FetchHelper.getAllUsers();
     }
 }
 </script>
