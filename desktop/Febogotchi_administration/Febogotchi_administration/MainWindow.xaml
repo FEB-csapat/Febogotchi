@@ -22,8 +22,8 @@
             <Button Content="Felvétel" Width="200" HorizontalAlignment="Center" FontSize="24" Name="NewEntity" Click="NewEntity_Click"/>
             <Label Content="Felhasználó konfigurációja" Margin="0,15,0,0" HorizontalAlignment="Center" FontSize="24"/>
             <Button Content="Konfigurálás" Width="200" HorizontalAlignment="Center" FontSize="24" Name="UserNewPassword" Click="UserNewPassword_Click"/>
-            <Label Content="Felhasználó törlése" Margin="0,15,0,0" HorizontalAlignment="Center" FontSize="24"/>
-            <Button Content="Törlés" Width="200" HorizontalAlignment="Center" FontSize="24" Name="UserDelete"/>
+            <Label Content="Felhasználók listája" Margin="0,15,0,0" HorizontalAlignment="Center" FontSize="24"/>
+                <Button Content="Listázás" Width="200" HorizontalAlignment="Center" FontSize="24" Name="ListUsers" Click="ListUsers_Click"/>
             
         </StackPanel>
         

@@ -20,6 +20,8 @@ namespace Febogotchi_administration
         private Button userdelete;
         private Button passwordchange;
         Grid AdministrationGrid;
+        bool containsnumeric = false;
+        bool containsupper = false;
         public UiGenerator(Grid ToRequest)
         {
             AdministrationGrid = ToRequest;
@@ -203,8 +205,6 @@ namespace Febogotchi_administration
                 MessageBox.Show($"Sikeresen törölte ( {_username.Content} ) nevű felhasználót.", "Sikeres felhasználó törlés");
             }
         }
-        bool containsnumeric = false;
-        bool containsupper = false;
         private void passwordchange_Click(object sender, RoutedEventArgs e)
         {
             if (password.Text == repassword.Text)
@@ -241,6 +241,13 @@ namespace Febogotchi_administration
             {
                 MessageBox.Show($"A jelszavak nem egyeznek!", "Hibás jelszó!");
             }
+        }
+        private void ShowListedUsers()
+        {
+            ClearGrid();
+            AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(25, GridUnitType.Pixel) });
+            AdministrationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            AdministrationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
         }
     }
 }

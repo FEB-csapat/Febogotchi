@@ -36,5 +36,11 @@ namespace Febogotchi_administration
             AdministrationTab EntityTab = new AdministrationTab(2);
             EntityTab.Show();
         }
+
+        private void ListUsers_Click(object sender, RoutedEventArgs e)
+        {
+            ApiReader apireader = new ApiReader("http://localhost:8881/");
+            MessageBox.Show($"{apireader.GetUsers("api/users/1")}");
+        }
     }
 }

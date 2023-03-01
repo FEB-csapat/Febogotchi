@@ -37,6 +37,10 @@ namespace Febogotchi_administration
                     this.Title = "Felhasználó adatainak módosítása";
                     UiTab.UserDataChange();
                     break;
+                case 3:
+                    this.Title = "Felhasználók listája";
+                    UiTab.UserDataChange();
+                    break;
             }
         }
         
