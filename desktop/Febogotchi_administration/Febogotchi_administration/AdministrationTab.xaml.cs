@@ -39,7 +39,7 @@ namespace Febogotchi_administration
                     break;
                 case 3:
                     this.Title = "Felhasználók listája";
-                    UiTab.UserDataChange();
+                    UiTab.ShowListedUsers();
                     break;
             }
         }

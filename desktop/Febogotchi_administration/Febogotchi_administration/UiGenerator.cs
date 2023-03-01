@@ -242,12 +242,84 @@ namespace Febogotchi_administration
                 MessageBox.Show($"A jelszavak nem egyeznek!", "Hibás jelszó!");
             }
         }
-        private void ShowListedUsers()
+        private List<Users> getAllUser()
+        {
+            List<Users> users = new List<Users>();
+            ApiReader apireader = new ApiReader("http://localhost:8881/");
+            //users.Add(apireader.GetUser("api/users/1"));
+            foreach (var item in apireader.GetUsers("api/users"))
+            {
+                users.Add(item);
+            }
+            return users;
+        }
+        public void ShowListedUsers()
         {
             ClearGrid();
             AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(25, GridUnitType.Pixel) });
             AdministrationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             AdministrationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            AdministrationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            Label lbl = new Label
+            {
+                Content = "Felhasználó azonosítója:",
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+            AdministrationGrid.Children.Add(lbl);
+            Grid.SetColumn(lbl, 0);
+            Grid.SetRow(lbl, 0);
+            lbl = new Label
+            {
+                Content = "Felhasználó neve:",
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+            AdministrationGrid.Children.Add(lbl);
+            Grid.SetColumn(lbl, 1);
+            Grid.SetRow(lbl,0);
+            lbl = new Label
+            {
+                Content = "Felhasználó szerepköre:",
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+            AdministrationGrid.Children.Add(lbl);
+            Grid.SetColumn(lbl, 2);
+            Grid.SetRow(lbl, 0);
+            List <Users> users = getAllUser();
+            int rows = 1;
+            int cols;
+            foreach (var item in users)
+            {
+                AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(25, GridUnitType.Pixel) });
+                cols = 0;
+                lbl = new Label
+                {
+                    Content = item.id,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                };
+                AdministrationGrid.Children.Add(lbl);
+                Grid.SetColumn(lbl, cols);
+                Grid.SetRow(lbl, rows);
+                cols++;
+                lbl = new Label
+                {
+                    Content = item.name,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                };
+                AdministrationGrid.Children.Add(lbl);
+                Grid.SetColumn(lbl, cols);
+                Grid.SetRow(lbl, rows);
+                cols++;
+                lbl = new Label
+                {
+                    Content = item.roles[0],
+                    HorizontalAlignment = HorizontalAlignment.Center
+                };
+                AdministrationGrid.Children.Add(lbl);
+                Grid.SetColumn(lbl, cols);
+                Grid.SetRow(lbl, rows);
+                cols++;
+                rows++;
+            }
         }
     }
 }

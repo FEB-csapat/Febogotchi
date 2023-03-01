@@ -39,8 +39,9 @@ namespace Febogotchi_administration
 
         private void ListUsers_Click(object sender, RoutedEventArgs e)
         {
-            ApiReader apireader = new ApiReader("http://localhost:8881/");
-            MessageBox.Show($"{apireader.GetUsers("api/users/1")}");
+            AdministrationTab EntityTab = new AdministrationTab(3);
+            EntityTab.Show();
         }
+
     }
 }

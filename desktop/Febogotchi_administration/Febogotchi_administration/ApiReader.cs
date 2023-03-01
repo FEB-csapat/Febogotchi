@@ -20,7 +20,7 @@ namespace Febogotchi_administration
             kliens.DefaultRequestHeaders.Accept.Clear();
             kliens.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
-        public Users GetUsers(string path)
+        public Users GetUser(string path)
         {
             Users visszateres = null;
             HttpResponseMessage valasz = kliens.GetAsync(path).Result;
@@ -28,6 +28,17 @@ namespace Febogotchi_administration
             {
                 string str = valasz.Content.ReadAsStringAsync().Result;
                 visszateres = JsonSerializer.Deserialize<Users>(str);
+            }
+            return visszateres;
+        }
+        public Users[] GetUsers(string path)
+        {
+            Users[] visszateres = null;
+            HttpResponseMessage valasz = kliens.GetAsync(path).Result;
+            if (valasz.IsSuccessStatusCode)
+            {
+                string str = valasz.Content.ReadAsStringAsync().Result;
+                visszateres = JsonSerializer.Deserialize<Users[]>(str);
             }
             return visszateres;
         }
