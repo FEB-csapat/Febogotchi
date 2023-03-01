@@ -1,8 +1,6 @@
 <?php
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\PetController;
-use App\Http\Controllers\PetTypeController;
-use App\Http\Controllers\ActionController;
+
+use App\Http\Controllers\UniversalController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MeController;
@@ -23,13 +21,13 @@ use Illuminate\Support\Facades\Route;
 
 
 /*
-* General API routes for auth
+* Universal API routes for authentication
 */
 Route::post('/register', [AuthController::class, "register"])
     ->name("register.store");
 
-Route::post('/authenticate', [AuthController::class, "login"])
-    ->name("auth.authenticate");
+Route::post('/login', [AuthController::class, "login"])
+    ->name("auth.login");
 
 Route::post('/logout', [AuthController::class, "logout"])
     ->name("auth.logout");
@@ -39,31 +37,40 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 /*
-* General API routes for user
+* Universal API routes for user
 */
-Route::get('/users', [UserController::class, "index"])
+Route::get('/users', [UniversalController::class, "indexUsers"])
     ->name("users.index");
 
-Route::get('/users/{id}', [UserController::class, "show"])
+Route::get('/users/{id}', [UniversalController::class, "showUser"])
     ->name("users.show");
 
 /*
-* General API routes for pet
+* Universal API routes for pet
 */
-Route::get('/pets', [PetController::class, "index"])
+Route::get('/pets', [UniversalController::class, "indexPets"])
     ->name("pets.index");
 
-Route::get('/pets/{id}', [PetController::class, "show"])
+Route::get('/pets/{id}', [UniversalController::class, "showPet"])
     ->name("pets.show");
 
 /*
-* General API routes for pet type
+* Universal API routes for pet type
 */
-Route::get('/pet_types', [PetTypeController::class, "index"])
+Route::get('/pet_types', [UniversalController::class, "indexPetTypes"])
     ->name("pet_types.index");
 
-Route::get('/pet_types/{id}', [PetTypeController::class, "show"])
+Route::get('/pet_types/{id}', [UniversalController::class, "showPetType"])
     ->name("pet_types.show");
+
+/*
+* Universal API routes for pet status
+*/
+Route::get('/pet_statuses', [UniversalController::class, "indexPetStatuses"])
+    ->name("pet_statuses.index");
+
+Route::get('/pet_statuses/{id}', [UniversalController::class, "showPetStatus"])
+    ->name("pet_statuses.show");
 
 /*
 * User API routes for user
@@ -87,7 +94,7 @@ Route::middleware(['auth:api', 'role:user|admin'])->group(function () {
 
 
     Route::put('/me/pets/{id}/action', [MeController::class, "actionPet"])
-        ->name("action");
+        ->name("me.pet.saction");
 });
 
 
@@ -96,18 +103,18 @@ Route::middleware(['auth:api', 'role:user|admin'])->group(function () {
 */
 Route::middleware(['auth:api', 'role:admin'])->group(function () {
 
-    Route::post('/admin/pets', [MeController::class, "storePet"])
+    Route::post('/admin/pets', [AdminController::class, "storePet"])
         ->name("me.pets.store");
 
-    Route::put('/admin/pets/{id}', [MeController::class, "updatePet"])
+    Route::put('/admin/pets/{id}', [AdminController::class, "updatePet"])
         ->name("me.pets.update");
 
-    Route::delete('/admin/pets/{id}', [MeController::class, "destroyPet"])
+    Route::delete('/admin/pets/{id}', [AdminController::class, "destroyPet"])
         ->name("me.pets.destroy");
 
 
-    Route::put('/admin/pets/{id}/action', [MeController::class, "actionPet"])
-        ->name("action");
+    Route::put('/admin/pets/{id}/action', [AdminController::class, "actionPet"])
+        ->name("admin.pets.action");
 
 
     Route::post('/admin/users', [AdminController::class, "storeUser"])

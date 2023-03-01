@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Pet;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRegisterRequest extends FormRequest
+
+class AdminStorePetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +25,9 @@ class StoreRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required|min:4|max:20|unique:users,name",
-            "password" => "required|min:5|max:255"
+            'user_id' => 'required|numeric|exists:users,id',
+            'pet_type_id' => "required|numeric|exists:pet_types,id",
+            'name' => "required|min:2|max:20",
         ];
     }
 }

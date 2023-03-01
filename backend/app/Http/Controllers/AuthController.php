@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AuthenticateRequest;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -32,7 +32,7 @@ class AuthController extends Controller
         return response($response, 200);
     }
 
-    public function login(AuthenticateRequest $request)
+    public function login(LoginRequest $request)
     {
         $validator = Validator::make($request->all(), [
             "name" => "required|string|min:4|max:20",
