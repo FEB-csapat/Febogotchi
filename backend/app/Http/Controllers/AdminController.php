@@ -6,9 +6,10 @@ use App\Http\Resources\PetResource;
 use App\Http\Resources\UserResource;
 use App\Models\Pet;
 use Illuminate\Http\Request;
-use App\Http\Requests\StorePetRequest;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\Pet\AdminStorePetRequest;
+use App\Http\Requests\Pet\AdminUpdatePetRequest;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
@@ -30,10 +31,10 @@ class AdminController extends Controller
     /**
      * Store a newly created pet in storage.
      *
-     * @param  App\Http\Requests\StorePetRequest  $request
+     * @param  App\Http\Requests\AdminStorePetRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function storePet(StorePetRequest $request)
+    public function storePet(AdminStorePetRequest $request)
     {
         $data = $request->validated();
         $newPet = Pet::create($data);
@@ -47,7 +48,7 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updatePet(Request $request, $id)
+    public function updatePet(AdminUpdatePetRequest $request, $id)
     {
         $data = $request->validated();
         $pet = Pet::findOrFail($id);
@@ -64,7 +65,7 @@ class AdminController extends Controller
      */
     public function destroyPet(Request $request, $id)
     {
-        $pet = Pet::all()->findOrFail($id);
+        $pet = Pet::findOrFail($id);
         $pet->delete();
     }
 
@@ -76,7 +77,7 @@ class AdminController extends Controller
      */
     public function actionPet(Request $request, $id)
     {
-        $pet = $request->user()->pets()->findOrFail($id);
+        $pet = Pet::findOrFail($id);
         
         $result = json_decode($request->getContent(), true);
 
@@ -107,7 +108,7 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\StoreUserRequest  $request
+     * @param  App\Http\Requests\User\StoreUserRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function storeUser(StoreUserRequest $request)
@@ -147,7 +148,7 @@ class AdminController extends Controller
         if($id == $request->user()->id){
             abort(403, "Cannot delete admin");
         }
-        $user = User::all()->findOrFail($id);
+        $user = User::findOrFail($id);
         $user->delete();
     }
 }

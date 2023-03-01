@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PetResource;
 use App\Models\Pet;
 use Illuminate\Http\Request;
-use App\Http\Requests\StorePetRequest;
+use App\Http\Requests\Pet\StorePetRequest;
 use Illuminate\Support\Carbon;
 
 class MeController extends Controller
@@ -36,7 +36,7 @@ class MeController extends Controller
     /**
      * Store a newly created pet in storage.
      *
-     * @param  App\Http\Requests\StorePetRequest  $request
+     * @param  App\Http\Requests\Pet\StorePetRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function storePet(StorePetRequest $request)

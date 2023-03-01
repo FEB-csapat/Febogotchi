@@ -4,8 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-
-class StorePetRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +24,8 @@ class StorePetRequest extends FormRequest
     public function rules()
     {
         return [
-          //  'user' => (new UserResource($this->user))
-            'pet_type_id' => "required|numeric|exists:pet_types,id",
-            
-            'name' => "required|min:2|max:20",
+            "name" => "required|min:4|max:20",
+            "password" => "required|min:5|max:255"
         ];
     }
 }

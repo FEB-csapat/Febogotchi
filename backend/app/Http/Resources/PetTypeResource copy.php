@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Queue\Connectors\NullConnector;
 
-class PetStatusResource extends JsonResource
+class PetTypeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +16,10 @@ class PetStatusResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'status' => $this->status,
-            'duration' => $this->duration
-                ? $this->duration->format('H:i:s')
-                : null
+           // 'pet' => (new PetResource($this->whenLoaded('pet')))
+            'type' => $this->type
+          //  'created_at' => $this->created_at,
+          //  'updated_at' => $this->updated_at
         ];
-        
     }
 }

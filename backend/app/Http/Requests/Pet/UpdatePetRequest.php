@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Pet;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUserRequest extends FormRequest
+
+class UpdatePetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +25,8 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'pet_id' => "numeric",
+            'pet_type_id' => "required|numeric|exists:pet_types,id",
             'name' => "required|min:2|max:20",
-            'password' => "required|min:2|max:20",
         ];
     }
 }
