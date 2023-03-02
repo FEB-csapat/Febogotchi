@@ -10,7 +10,7 @@
             </div>
 
             <div class="col-3">
-                <input type="button" class="btn btn-primary w-100" value="Alszik" to:>
+                <input type="button" class="btn btn-primary w-100" value="Alszik">
             </div>
 
             <div class="col-3">
@@ -56,14 +56,33 @@
 
             </div>
             <div class="col-3">
-                <input type="button" class="btn btn-danger w-100" value="Kijelentkezés">
+                <input type="button" class="btn btn-danger w-100" value="Kijelentkezés" @click="showData()">
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { FetchHelper } from '../utils/https.mjs';
 export default{
-    name: "IndexView"
+    name: "IndexView",
+    data(){
+        return{
+            valasz: []
+        }      
+    },
+    methods:{
+        async getData(){
+            FetchHelper.initialize("asd");
+            this.valasz = (await FetchHelper.getAllUsers()).data;
+            console.log(this.valasz[0].name);
+        },
+        showData(){
+            console.log(this.valasz);
+        }
+    },
+    mounted(){
+        this.getData();
+    }
 }
 </script>
