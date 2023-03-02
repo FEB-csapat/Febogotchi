@@ -6,12 +6,16 @@
             </div>
         </div>
         <div class="row mb-2 bg-secondary">
-            
-            <div class="col-4 bg-secondary bg-opacity-50">Csirke (x3)</div>
+            <table class="table table-striped">
+                <tr v-for="item in foods">
+                    <td class="fs-6">{{item}}</td>
+                    <td><span class="badge btn bg-success fs-6 mt-2" @click="Eat()">Etetés</span></td>
+                </tr>
+            </table>  
         </div>
         <div class="row">
             <h2 class="text-center">
-                Tápláltság: 76/100
+                Tápláltság: {{resp.energy}}/100
             </h2>
         </div>
         <div class="row pb-2">
@@ -25,7 +29,26 @@
     </div>
 </template>
 <script>
+import { FetchHelper } from '../utils/https.mjs';
 export default{
+    data(){
+        return{
+            token:"",
+            foods: ["Csirke","Csont"],
+            resp: []
+        }
+    },
+    methods:{
+        async Eat(){
+            this.resp = (await FetchHelper.MyPetDoAction(this.resp.id,"eat")).data;
+            alert("Sikeres etetés!");
+        }
+    },
+    async mounted(){
+        this.token = localStorage.getItem('token');
+        FetchHelper.initialize(this.token);
+        this.resp = (await FetchHelper.getMyPets()).data[0];
+    },
     name: "FeedView"
 }
 </script>

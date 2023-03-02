@@ -18,7 +18,8 @@
 
             </div>
             <div class="col-3">
-                <button class="btn btn-primary w-100"><router-link class="nav-link active" aria-current="page" to="/">Vissza a főoldalra</router-link></button>
+                <button class="btn btn-primary w-100">Vissza a főoldalra</button>
+                <button @click="listdata()">Tester</button>
             </div>
         </div>
     </div>
@@ -26,4 +27,21 @@
 
 <script>
 
+export default{
+    data(){
+        return{
+            token:"",
+            actions: ["idle","hunt","play","cure","eat","sleep"]
+        }
+    },
+    methods:{
+        listdata(){
+            console.log(this.token);
+        }
+    },
+    mounted(){
+        this.token = localStorage.getItem('token');
+        
+    }
+}
 </script>
