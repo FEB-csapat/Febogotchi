@@ -22,6 +22,7 @@ namespace Febogotchi_administration
         Grid AdministrationGrid;
         bool containsnumeric = false;
         bool containsupper = false;
+        private Button createuser;
         public UiGenerator(Grid ToRequest)
         {
             AdministrationGrid = ToRequest;
@@ -260,30 +261,30 @@ namespace Febogotchi_administration
             AdministrationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             AdministrationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             AdministrationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            Label lbl = new Label
+            label = new Label
             {
                 Content = "Felhasználó azonosítója:",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            AdministrationGrid.Children.Add(lbl);
-            Grid.SetColumn(lbl, 0);
-            Grid.SetRow(lbl, 0);
-            lbl = new Label
+            AdministrationGrid.Children.Add(label);
+            Grid.SetColumn(label, 0);
+            Grid.SetRow(label, 0);
+            label = new Label
             {
                 Content = "Felhasználó neve:",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            AdministrationGrid.Children.Add(lbl);
-            Grid.SetColumn(lbl, 1);
-            Grid.SetRow(lbl,0);
-            lbl = new Label
+            AdministrationGrid.Children.Add(label);
+            Grid.SetColumn(label, 1);
+            Grid.SetRow(label, 0);
+            label = new Label
             {
                 Content = "Felhasználó szerepköre:",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            AdministrationGrid.Children.Add(lbl);
-            Grid.SetColumn(lbl, 2);
-            Grid.SetRow(lbl, 0);
+            AdministrationGrid.Children.Add(label);
+            Grid.SetColumn(label, 2);
+            Grid.SetRow(label, 0);
             List <Users> users = getAllUser();
             int rows = 1;
             int cols;
@@ -291,35 +292,117 @@ namespace Febogotchi_administration
             {
                 AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(25, GridUnitType.Pixel) });
                 cols = 0;
-                lbl = new Label
+                label = new Label
                 {
                     Content = item.id,
                     HorizontalAlignment = HorizontalAlignment.Center
                 };
-                AdministrationGrid.Children.Add(lbl);
-                Grid.SetColumn(lbl, cols);
-                Grid.SetRow(lbl, rows);
+                AdministrationGrid.Children.Add(label);
+                Grid.SetColumn(label, cols);
+                Grid.SetRow(label, rows);
                 cols++;
-                lbl = new Label
+                label = new Label
                 {
                     Content = item.name,
                     HorizontalAlignment = HorizontalAlignment.Center
                 };
-                AdministrationGrid.Children.Add(lbl);
-                Grid.SetColumn(lbl, cols);
-                Grid.SetRow(lbl, rows);
+                AdministrationGrid.Children.Add(label);
+                Grid.SetColumn(label, cols);
+                Grid.SetRow(label, rows);
                 cols++;
-                lbl = new Label
+                label = new Label
                 {
                     Content = item.roles[0],
                     HorizontalAlignment = HorizontalAlignment.Center
                 };
-                AdministrationGrid.Children.Add(lbl);
-                Grid.SetColumn(lbl, cols);
-                Grid.SetRow(lbl, rows);
+                AdministrationGrid.Children.Add(label);
+                Grid.SetColumn(label, cols);
+                Grid.SetRow(label, rows);
                 cols++;
                 rows++;
             }
+        }
+        public void UserCreation()
+        {
+            ClearGrid();
+            AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(35, GridUnitType.Pixel) });
+            AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(35, GridUnitType.Pixel) });
+            AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(35, GridUnitType.Pixel) });
+            AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(35, GridUnitType.Pixel) });
+            AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(35, GridUnitType.Pixel) });
+            AdministrationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            AdministrationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            label = new Label
+            {
+                Content = "Adja meg az új felhasználó felhasználónevét és jelszavát:",
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+            AdministrationGrid.Children.Add(label);
+            Grid.SetColumnSpan(label, 2);
+            Grid.SetRow(label, 0);
+            label = new Label
+            {
+                Content = "Felhasználónév:",
+                HorizontalAlignment = HorizontalAlignment.Right
+            };
+            AdministrationGrid.Children.Add(label);
+            Grid.SetColumn(label, 0);
+            Grid.SetRow(label, 1);
+            label = new Label
+            {
+                Content = "Jelszó:",
+                HorizontalAlignment = HorizontalAlignment.Right
+            };
+            AdministrationGrid.Children.Add(label);
+            Grid.SetColumn(label, 0);
+            Grid.SetRow(label, 2);
+            label = new Label
+            {
+                Content = "Jelszó újra:",
+                HorizontalAlignment = HorizontalAlignment.Right
+            };
+            AdministrationGrid.Children.Add(label);
+            Grid.SetColumn(label, 0);
+            Grid.SetRow(label, 3);
+            UserName = new TextBox
+            {
+                Width = 150,
+                HorizontalAlignment = HorizontalAlignment.Left
+            };
+            AdministrationGrid.Children.Add(UserName);
+            Grid.SetColumn(UserName, 1);
+            Grid.SetRow(UserName, 1);
+            password = new TextBox
+            {
+                Width = 150,
+                HorizontalAlignment = HorizontalAlignment.Left
+            };
+            AdministrationGrid.Children.Add(password);
+            Grid.SetColumn(password, 1);
+            Grid.SetRow(password, 2);
+            repassword = new TextBox
+            {
+                Width = 150,
+                HorizontalAlignment = HorizontalAlignment.Left
+            };
+            AdministrationGrid.Children.Add(repassword);
+            Grid.SetColumn(repassword, 1);
+            Grid.SetRow(repassword, 3);
+            createuser = new Button
+            {
+                Content = "Regisztráció",
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Width = 300
+            };
+            AdministrationGrid.Children.Add(createuser);
+            Grid.SetColumnSpan(createuser, 2);
+            Grid.SetRow(createuser, 4);
+            createuser.Click += createuser_Click;
+        }
+        private void createuser_Click(object sender, RoutedEventArgs e)
+        {
+            ApiSender apiSender = new ApiSender();
+            apiSender.CreateUser(UserName.Text, password.Text, "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYjE5Yzk0NTAxYWExMDdlNDk1MzIxNGEzNDY3MWQ2ODE1NzI4NTJkNTQ1YmE1MWQ4ZmJmZjk3MDEyZjQ3ZDc5YzBjMGNjNjJlNzIxNTg5NjEiLCJpYXQiOjE2Nzc3NTk2MDkuODg2MDk3LCJuYmYiOjE2Nzc3NTk2MDkuODg2MSwiZXhwIjoxNzA5MzgyMDA5LjgyNTcxOSwic3ViIjoiMiIsInNjb3BlcyI6W119.E5eRxRcSvW3UKvQTkHq4aL0UzFRNUGny4tUGv-4nSdSeU8dTUS1IMCNj8j4hXQ6LWFYYNeHiyY4utP4zvjkCyC-K5jOPZhOlpaka6xsX5IrRUmerRUGlYtFMrW0tFdjGbr1ziN-VaPuLNLNZf0DttLw-I5oj5fZ-guY4eLFAjB7WTdIkRIUSRJIneLHgkz9Ky781iOxgU57nEZymXoO6SMIgbegmwHzUGHIajInKY9kgg6KYojNmHaEeV9XlKL1WQ0DEpWiNWhWOOO8Ki0PTxq8EkMf5tfMhy-OWN5jIeyFdn6xPtfITgKSfyFJLFU1w9YTVQjCRQxURFwLSOIinDN5BHk43zLSRZJa3tGdRLeJxDAkSDTlCGAo4oXRP4ud2NCzLxyIWlq1g0dytXw9vY7gYgazzLS8cm4KJHuvTCIxAkoOWDlIhPROhzg1xllQGre5dTbX3CocGbparuLIk5a1ScrHp7SpOc68tce3JaKSkYDHXlQzlE2-x1RLhjoNMORq3APh2qOKjMzXM6YHid-TyYZDf8x09-HGIEXIJ9y5cWuqeBpJdTxokH81Tz4N0GjSkpD0AV3Yd9JyBE18V6rsncdfIV-4x3E8G4ix-Nzz45mi7QZgLLpevfs2azD4Wp5BNL-dbglLHuJdi5G8x1COEa3lj7pSK80ZifOlcTWQ");
         }
     }
 }

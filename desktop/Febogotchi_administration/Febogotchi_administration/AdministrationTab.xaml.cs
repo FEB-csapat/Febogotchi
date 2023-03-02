@@ -41,6 +41,10 @@ namespace Febogotchi_administration
                     this.Title = "Felhasználók listája";
                     UiTab.ShowListedUsers();
                     break;
+                case 4:
+                    this.Title = "Felhasználó létrehozása";
+                    UiTab.UserCreation();
+                    break;
             }
         }
         

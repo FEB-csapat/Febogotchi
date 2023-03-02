@@ -43,5 +43,10 @@ namespace Febogotchi_administration
             EntityTab.Show();
         }
 
+        private void CreateUser_Click(object sender, RoutedEventArgs e)
+        {
+            AdministrationTab EntityTab = new AdministrationTab(4);
+            EntityTab.Show();
+        }
     }
 }

@@ -23,9 +23,11 @@
             <Label Content="Felhasználó konfigurációja" Margin="0,15,0,0" HorizontalAlignment="Center" FontSize="24"/>
             <Button Content="Konfigurálás" Width="200" HorizontalAlignment="Center" FontSize="24" Name="UserNewPassword" Click="UserNewPassword_Click"/>
             <Label Content="Felhasználók listája" Margin="0,15,0,0" HorizontalAlignment="Center" FontSize="24"/>
-                <Button Content="Listázás" Width="200" HorizontalAlignment="Center" FontSize="24" Name="ListUsers" Click="ListUsers_Click"/>
-            
-        </StackPanel>
+            <Button Content="Listázás" Width="200" HorizontalAlignment="Center" FontSize="24" Name="ListUsers" Click="ListUsers_Click"/>
+            <Label Content="Új felhasználó létrehozása" Margin="0,15,0,0" HorizontalAlignment="Center" FontSize="24"/>
+            <Button Content="Létrehoz" Width="200" HorizontalAlignment="Center" FontSize="24" Name="CreateUser" Click="CreateUser_Click"/>
+
+            </StackPanel>
         
         <!--<StackPanel Orientation="Horizontal" Grid.Row="2">
             <Label Content="Felhasználó neve:" Margin="0,0,10,0"/>
