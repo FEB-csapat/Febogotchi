@@ -4,25 +4,67 @@
         <form>
   <div class="mb-3">
     <label for="username" class="form-label">Felhasználónév</label>
-    <input type="text" class="form-control" id="username">
+    <input type="text" class="form-control" v-model="username">
   </div>
   <div class="mb-3">
     <label for="password" class="form-label">Jelszó</label>
-    <input type="password" class="form-control" id="password">
+    <input type="password" class="form-control" v-model="password">
   </div>
   <div class="mb-3">
     <label for="passwordconfirmation" class="form-label">Jelszó újra</label>
-    <input type="password" class="form-control" id="passwordconfirmation">
+    <input type="password" class="form-control" v-model="passwordagain">
     <div id="AccountHelp" class="form-text">Soha ne ossza meg bejelentkezési adatait senkivel!</div>
   </div>
   <button type="submit" class="btn btn-primary mb-3"><router-link class="nav-link active" aria-current="page" to="/login">Regisztráció</router-link></button>
 </form>
+<button @click="Listdata()">Teszt</button>
+<button @click="SendData">Elküldés</button>
+<button @click="Showtoken">Show Token</button>
     </div>
 </div>
 </template>
 
 <script>
+import axios from 'axios';
+import { RouterLink } from 'vue-router';
 export default{
+  data(){
+    return{
+      username:"",
+      password:"",
+      passwordagain:"",
+      usertoken: ""
+    }
+  },
+  methods:{
+    Listdata(){
+      console.log(this.loginData);
+    },
+    Showtoken(){
+      console.log(this.usertoken);
+    },
+    SendData(){
+      const jsonData = JSON.stringify(this.loginData)
+       const http = axios.create({
+          baseURL: "http://localhost:8881/api/",
+          headers: {'Content-Type': 'application/json'}
+       });
+       http.post("register",jsonData)
+       .then(response=>{this.usertoken = response.data.token})
+       .catch(error => alert(error));
+    }
+  },
+  components:{
+    RouterLink
+  },
+  computed:{
+    loginData(){
+      return{
+        name: this.username,
+        password: this.password
+      }
+    }
+  },
     name: "RegisterView"
 }
 </script>

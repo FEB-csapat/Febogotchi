@@ -56,7 +56,7 @@
 
             </div>
             <div class="col-3">
-                <input type="button" class="btn btn-danger w-100" value="Kijelentkezés" @click="getData()">
+                <input type="button" class="btn btn-danger w-100" value="Kijelentkezés" @click="showData()">
             </div>
         </div>
     </div>
@@ -72,14 +72,17 @@ export default{
         }      
     },
     methods:{
-        getData(){
-            
-            console.log(this.valasz[0]);
+        async getData(){
+            FetchHelper.initialize("asd");
+            this.valasz = (await FetchHelper.getAllUsers()).data;
+            console.log(this.valasz[0].name);
+        },
+        showData(){
+            console.log(this.valasz);
         }
     },
-    async mounted(){
-        FetchHelper.initialize("asd");
-        this.valasz = await FetchHelper.getAllUsers();
+    mounted(){
+        this.getData();
     }
 }
 </script>

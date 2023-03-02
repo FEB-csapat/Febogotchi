@@ -12,8 +12,8 @@ export class FetchHelper{
         })
     }
 
-    static async getAllUsers(){
-        const response = await FetchHelper.http.get("users");
-        return response.data;
+    static getAllUsers(){
+        const response = FetchHelper.http.get("users");
+        return response;
     };
 }
