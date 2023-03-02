@@ -57,7 +57,6 @@ export default{
         password: this.password
       }
     }
-  },
-    name: "RegisterView"
+  }
 }
 </script>
