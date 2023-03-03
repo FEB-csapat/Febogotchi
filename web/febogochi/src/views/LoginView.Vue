@@ -35,9 +35,6 @@ export default{
     }
   },
   methods:{
-    Listdata(){
-      console.log(this.username + " " + this.password);
-    },
     Login(){
       const jsonData = JSON.stringify(this.loginData);
       login.post('login',jsonData)
@@ -47,9 +44,15 @@ export default{
         return FetchHelper.getMyPets();
       })
       .then(response=>{
-        sessionStorage.setItem('mypet',JSON.stringify(response.data[0]));
+        if(response.data.length===0){
+          router.push('/create');
+        }
+        else
+        {
+          sessionStorage.setItem('mypet',JSON.stringify(response.data[0]));
+          router.push('/index');
+        }
       })
-      .then(()=>{router.push('/index');})
       .catch(error=> alert(error));
     }
   },

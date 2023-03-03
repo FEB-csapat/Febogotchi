@@ -13,8 +13,9 @@
                     <option v-for="(type, index) in avibtypes" :key="index" :value="type.id" >{{type.type}}</option>
                 </select>
             </div>
+            <button class="btn btn-success form-control" @click.prevent="create()">Állat létrehozása</button>
         </form>
-        <button class="btn btn-success" @click="create()">Mutasd</button>
+
     </div>
 </div>
 </template>
@@ -33,7 +34,6 @@ export default{
     methods:{
         create(){
             const jsonData = JSON.stringify(this.petData);
-            console.log(jsonData);
             FetchHelper.createPet(jsonData);
         }
     },
@@ -41,7 +41,6 @@ export default{
         this.token = sessionStorage.getItem('token');
         FetchHelper.initialize(this.token);
         this.avibtypes = (await FetchHelper.getAllPetTypes()).data;
-        console.log(this.avibtypes);
     },
     computed:{
         petData(){

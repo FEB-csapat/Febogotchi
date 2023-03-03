@@ -41,7 +41,10 @@ export class FetchHelper{
     static createPet(jsondata){
         const response = FetchHelper.http.post('me/pets',jsondata)
         .then(response=> sessionStorage.setItem('mypet',JSON.stringify(response.data)))
-        .then(alert("Sikeres létrehozás!"))
+        .then(()=>{
+            alert("Sikeres létrehozás!");
+            router.push('/index');
+        })
         .catch(error=>alert(error));
     }
 }
