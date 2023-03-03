@@ -41,13 +41,14 @@ export default{
     methods:{
         async Eat(){
             this.resp = (await FetchHelper.MyPetDoAction(this.resp.id,"eat")).data;
+            sessionStorage.setItem('mypet',this.resp);
             alert("Sikeres etetés!");
         }
     },
-    async mounted(){
+    mounted(){
         this.token = sessionStorage.getItem('token');
         FetchHelper.initialize(this.token);
-        this.resp = (await FetchHelper.getMyPets()).data[0];
+        this.resp = sessionStorage.getItem('mypet');
     },
     name: "FeedView"
 }

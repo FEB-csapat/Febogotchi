@@ -26,13 +26,13 @@
                     Felhasználó: Admin
                 </p>
                 <p>
-                    Név: Blöki
+                    Név: {{valasz.name}}
                 </p>
                 <p>
-                    Típus: kutya
+                    Típus: {{ valasz.type.type }}
                 </p>
                 <p>
-                    Kor: 67 nap
+                    Kor: {{ eletkor }}
                 </p>
                 <p>
                     Tápláltság: 76/100
@@ -68,21 +68,26 @@ export default{
     name: "IndexView",
     data(){
         return{
-            valasz: []
+            valasz: [],
+            token:"",
+            eletkor:0
         }      
     },
     methods:{
-        async getData(){
-            FetchHelper.initialize("asd");
-            this.valasz = (await FetchHelper.getAllUsers()).data;
-            console.log(this.valasz[0].name);
-        },
         showData(){
             console.log(this.valasz);
+        },
+        Hunt(){
+
         }
     },
-    mounted(){
-        this.getData();
+    async mounted(){
+        this.token = sessionStorage.getItem('token');
+        FetchHelper.initialize(this.token);
+        this.valasz = (await FetchHelper.getMyPets()).data;
+        console.log(this.valasz);
+        sessionStorage.setItem('mypet',this.valasz);
+        eletkor = Math.floor((new Date().getTime() - valasz.birth_date)/(1000*60*60*24));
     }
 }
 </script>

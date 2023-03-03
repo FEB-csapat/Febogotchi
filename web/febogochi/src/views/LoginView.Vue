@@ -41,7 +41,7 @@ export default{
       login.post('login',jsonData)
       .then(response=>sessionStorage.setItem('token',response.data.token))
       .catch(error=> alert(error));
-      router.push("/");
+      router.push("/index");
     }
   },
   computed:{
