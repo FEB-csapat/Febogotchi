@@ -14,6 +14,7 @@ namespace Febogotchi_administration
     {
         HttpClient client = new HttpClient();
         public string token { get; set; }
+        public string message { get; set; }
         public async void CreateUser(string username,string password,string token)
         {
             string url = "http://localhost:8881/api/admin/users?=";
@@ -36,7 +37,7 @@ namespace Febogotchi_administration
                 MessageBox.Show("Sikertelen regisztráció!");
             }
         }
-        public async void Login(string username,string password,LoginWindow window)
+        public async void Login(string username,string password)
         {
             string url = "http://localhost:8881/api/login";
             var registerdata = new
@@ -59,12 +60,12 @@ namespace Febogotchi_administration
                     case MessageBoxResult.OK:
                         MainWindow mainwindow = new MainWindow(this.token);
                         mainwindow.Show();
-                        window.Close();
                         break;
                 }
             }
             else
             {
+                message = "Password mismatch";
                 MessageBoxResult result = MessageBox.Show("Sikertelen bejelentkezés", "Bejelentkezés", MessageBoxButton.OK);
             }
         }

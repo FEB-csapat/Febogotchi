@@ -32,7 +32,7 @@ namespace Febogotchi_administration
             apisender = new ApiSender();
             Username = Username_tb.Text;
             Password = Password_tb.Text;
-            apisender.Login(Username, Password,this);
+            apisender.Login(Username, Password);
         }
     }
 }
