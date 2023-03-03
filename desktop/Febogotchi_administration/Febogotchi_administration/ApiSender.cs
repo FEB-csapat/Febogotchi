@@ -37,7 +37,7 @@ namespace Febogotchi_administration
                 MessageBox.Show("Sikertelen regisztráció!");
             }
         }
-        public async void Login(string username,string password)
+        public async void Login(string username,string password,Window window)
         {
             string url = "http://localhost:8881/api/login";
             var registerdata = new
@@ -60,6 +60,7 @@ namespace Febogotchi_administration
                     case MessageBoxResult.OK:
                         MainWindow mainwindow = new MainWindow(this.token);
                         mainwindow.Show();
+                        window.Close();
                         break;
                 }
             }

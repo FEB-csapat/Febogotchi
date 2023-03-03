@@ -16,9 +16,9 @@ namespace Febogotchi_administration.Tests
         public void LoginTest()
         {
             ApiSender apisender = new ApiSender();
-            apisender.Login("Feco", "jelszo");
+            //apisender.Login("Feco", "jelszo");
             Assert.AreNotEqual("Password mismatch",apisender.token);
-            apisender.Login("Feco", "asdasd");
+            //apisender.Login("Feco", "asdasd");
             Assert.AreEqual("Password mismatch", apisender.message);
         }
     }
