@@ -99,17 +99,8 @@ export default{
     },
     async mounted(){
         this.token = sessionStorage.getItem('token');
-        FetchHelper.initialize(this.token);
-        if(sessionStorage.getItem('mypet')===null)
-        {
-        this.resp = (await FetchHelper.getMyPets()).data[0];
-        console.log(this.resp);
-        sessionStorage.setItem('mypet',JSON.stringify(this.resp));
-        }
-        else
-        {            
-            this.resp = JSON.parse(sessionStorage.getItem('mypet'));
-        }
+        FetchHelper.initialize(this.token);          
+        this.resp = JSON.parse(sessionStorage.getItem('mypet'));
     }
 }
 </script>

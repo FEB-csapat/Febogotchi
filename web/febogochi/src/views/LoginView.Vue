@@ -26,6 +26,7 @@
 import { RouterLink } from 'vue-router';
 import { login } from '../utils/login.mjs';
 import router from '@/router';
+import { FetchHelper } from '../utils/https.mjs';
 export default{
   data(){
     return{
@@ -40,7 +41,14 @@ export default{
     Login(){
       const jsonData = JSON.stringify(this.loginData);
       login.post('login',jsonData)
-      .then(response=>sessionStorage.setItem('token',response.data.token))
+      .then(response=>{
+        sessionStorage.setItem('token',response.data.token);
+        FetchHelper.initialize(response.data.token);
+        return FetchHelper.getMyPets();
+      })
+      .then(response=>{
+        sessionStorage.setItem('mypet',JSON.stringify(response.data[0]));
+      })
       .then(()=>{router.push('/index');})
       .catch(error=> alert(error));
     }

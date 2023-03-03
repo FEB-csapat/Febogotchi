@@ -15,7 +15,7 @@
     <input type="password" class="form-control" v-model="passwordagain">
     <div id="AccountHelp" class="form-text">Soha ne ossza meg bejelentkezési adatait senkivel!</div>
   </div>
-  <button type="submit" class="btn btn-primary mb-3" @click="SendData()"><router-link class="nav-link active" aria-current="page" to="/login">Regisztráció</router-link></button>
+  <button type="submit" class="btn btn-primary mb-3" @click.prevent="CheckData()"><router-link class="nav-link active" aria-current="page" to="/login">Regisztráció</router-link></button>
 </form>
     </div>
 </div>
@@ -24,6 +24,7 @@
 <script>
 import { RouterLink } from 'vue-router';
 import {login} from "../utils/login.mjs";
+import router from '../router';
 export default{
   data(){
     return{
@@ -34,16 +35,21 @@ export default{
     }
   },
   methods:{
-    Listdata(){
-      console.log(this.loginData);
-    },
-    Showtoken(){
-      console.log(this.usertoken);
+    CheckData(){
+      if(this.password === this.passwordagain){
+        this.SendData();
+      }
+      else
+      {
+        alert("A két jelszó nem egyezik meg!");
+        this.password = null;
+        this.passwordagain=null;
+      }
     },
     SendData(){
       const jsonData = JSON.stringify(this.loginData)      
        login.post("register",jsonData)
-       .then(response=>alert("Sikeres regisztráció! Kérlek, jelentkezz be."))
+       .then(()=>{if(confirm("Sikeres regisztráció, kérlek jelentkezz be")){router.push("/login")}})
        .catch(error => alert(error));
     }
   },
