@@ -17,11 +17,17 @@ namespace Febogotchi_administration
         private TextBox password;
         private TextBox repassword;
         private Button userdelete;
+        private ComboBox UsersCB;
         private Button passwordchange;
         Grid AdministrationGrid;
+        private List<Users> users;
+        int toupdateindex;
+        private List<string> usernames = new List<string>();
         bool containsnumeric = false;
         bool containsupper = false;
         private Button createuser;
+        private string username;
+        ApiSender apiSender = new ApiSender();
         public string Token { get; set; }
         public UiGenerator(Grid ToRequest,string token)
         {
@@ -57,15 +63,35 @@ namespace Febogotchi_administration
             Grid.SetColumn(EntityName, 1);
             Grid.SetRow(EntityName, 0);
         }
+        public void Activeuser(string tb)
+        {
+            _username = new Label
+            {
+                Content = tb,
+                HorizontalAlignment = HorizontalAlignment.Right
+            };
+            AdministrationGrid.Children.Add(_username);
+            Grid.SetColumn(_username, 0);
+            Grid.SetRow(_username, 0);
+        }
+        private void GetAllUserNames()
+        {
+            usernames.Clear();
+            foreach (var item in getAllUser())
+            {
+                usernames.Add(item.name);
+            }
+        }
         public void UserDataChange()
         {
-            ClearGrid();
+            GetAllUserNames();
             AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30, GridUnitType.Pixel) });
             AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(40, GridUnitType.Pixel) });
             AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(45, GridUnitType.Pixel) });
             AdministrationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             AdministrationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             AdministrationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+
             label = new Label
             {
                 Content = "Felhasználó neve:",
@@ -75,15 +101,19 @@ namespace Febogotchi_administration
             AdministrationGrid.Children.Add(label);
             Grid.SetColumn(label, 0);
             Grid.SetRow(label, 1);
-            UserName = new TextBox
+
+            UsersCB = new ComboBox 
             {
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Width = 175,
                 Margin = new Thickness(0, 15, 0, 0)
             };
-            AdministrationGrid.Children.Add(UserName);
-            Grid.SetColumn(UserName, 1);
-            Grid.SetRow(UserName, 1);
+            UsersCB.ItemsSource = usernames;
+            Activeuser(username);
+            AdministrationGrid.Children.Add(UsersCB);
+            Grid.SetColumn(UsersCB, 1);
+            Grid.SetRow(UsersCB, 1);
+
             label = new Label
             {
                 Content = "Aktív felhasználó:",
@@ -92,14 +122,7 @@ namespace Febogotchi_administration
             AdministrationGrid.Children.Add(label);
             Grid.SetColumn(label, 0);
             Grid.SetRow(label, 0);
-            _username = new Label
-            {
-                Content = UserName.Text,
-                HorizontalAlignment = HorizontalAlignment.Right
-            };
-            AdministrationGrid.Children.Add(_username);
-            Grid.SetColumn(_username, 0);
-            Grid.SetRow(_username, 0);
+
             select = new Button
             {
                 Content = "Kiválasztás",
@@ -110,26 +133,29 @@ namespace Febogotchi_administration
             AdministrationGrid.Children.Add(select);
             Grid.SetColumnSpan(select, 2);
             Grid.SetRow(select, 2);
+
             select.Click += select_Click;
         }
+        
         private void select_Click(object sender, RoutedEventArgs e)
         {
-            //check if user exists
-            //if exists -> show ShowUserModifiableData
-            //if not-> show UserDataChange
-            if (UserName.Text!="")
+            if (UsersCB.SelectedItem.ToString() != "")
             {
-                _username.Content = UserName.Text;
+                users = getAllUser();
+                _username.Content = UsersCB.SelectedItem.ToString();
+                username = UsersCB.SelectedItem.ToString();
+                toupdateindex = users.FindIndex(x => x.name == UsersCB.SelectedItem.ToString())+1;
                 ShowUserModifiableData();
             }
             else
             {
                 MessageBox.Show($"Nem lehet üresen hagyni!", "Hibás felhasználónév!");
             }
-           
         }
         private void ShowUserModifiableData()
         {
+            ClearGrid();
+            UserDataChange();
             AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30, GridUnitType.Pixel) });
             AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30, GridUnitType.Pixel) });
             AdministrationGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(45, GridUnitType.Pixel) });
@@ -201,43 +227,45 @@ namespace Febogotchi_administration
         }
         private void userdelete_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show($"Biztosan törölni szertné a felhasználót? ( {_username.Content} )", "Felhasználó törlés megerősítés", System.Windows.MessageBoxButton.YesNo);
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show($"Biztosan törölni szertné a felhasználót? ( {_username.Content} )", "Felhasználó törlés megerősítés", MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                MessageBox.Show($"Sikeresen törölte ( {_username.Content} ) nevű felhasználót.", "Sikeres felhasználó törlés");
+                apiSender.DeleteUser(toupdateindex, Token);
             }
         }
         private void passwordchange_Click(object sender, RoutedEventArgs e)
         {
             if (password.Text == repassword.Text)
             {
-                if (password.Text.Length<8)
-                {
-                    MessageBox.Show($"Túl rövid jelszó!", "Hibás jelszó!");
-                    return;
-                }
-                foreach (var item in password.Text)
-                {
-                    if (Char.IsDigit(item))
-                    {
-                        containsnumeric = true;
-                    }
-                    if (Char.IsUpper(item))
-                    {
-                        containsupper = true;
-                    }
-                }
-                if (!containsnumeric)
-                {
-                    MessageBox.Show($"Legalább egy számmal rendelkeznie kell a jelszónak!", "Hibás jelszó!");
-                    return;
-                }
-                if (!containsupper)
-                {
-                    MessageBox.Show($"Legalább egy nagybetűvel rendelkeznie kell a jelszónak!", "Hibás jelszó!");
-                    return;
-                }
-                MessageBox.Show($"Sikeresen megváltoztatta a felhasználó jelszavát", "Sikeres jelszó változtatás");
+                //TODO: Move this validation to backend
+                //if (password.Text.Length<8)
+                //{
+                //    MessageBox.Show($"Túl rövid jelszó!", "Hibás jelszó!");
+                //    return;
+                //}
+                //foreach (var item in password.Text)
+                //{
+                //    if (Char.IsDigit(item))
+                //    {
+                //        containsnumeric = true;
+                //    }
+                //    if (Char.IsUpper(item))
+                //    {
+                //        containsupper = true;
+                //    }
+                //}
+                //if (!containsnumeric)
+                //{
+                //    MessageBox.Show($"Legalább egy számmal rendelkeznie kell a jelszónak!", "Hibás jelszó!");
+                //    return;
+                //}
+                //if (!containsupper)
+                //{
+                //    MessageBox.Show($"Legalább egy nagybetűvel rendelkeznie kell a jelszónak!", "Hibás jelszó!");
+                //    return;
+                //}
+                apiSender = new ApiSender();
+                apiSender.UpdateUser(toupdateindex, UsersCB.SelectedItem.ToString(), password.Text,Token);
             }
             else
             {
@@ -248,7 +276,6 @@ namespace Febogotchi_administration
         {
             List<Users> users = new List<Users>();
             ApiReader apireader = new ApiReader("http://localhost:8881/");
-            //users.Add(apireader.GetUser("api/users/1"));
             foreach (var item in apireader.GetUsers("api/users"))
             {
                 users.Add(item);
@@ -286,7 +313,7 @@ namespace Febogotchi_administration
             AdministrationGrid.Children.Add(label);
             Grid.SetColumn(label, 2);
             Grid.SetRow(label, 0);
-            List <Users> users = getAllUser();
+            users = getAllUser();
             int rows = 1;
             int cols;
             foreach (var item in users)
@@ -402,7 +429,7 @@ namespace Febogotchi_administration
         }
         private void createuser_Click(object sender, RoutedEventArgs e)
         {
-            ApiSender apiSender = new ApiSender();
+            apiSender = new ApiSender();
             apiSender.CreateUser(UserName.Text, password.Text, Token);
         }
     }
