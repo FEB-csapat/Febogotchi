@@ -15,7 +15,6 @@
             </div>
         </form>
         <button class="btn btn-success" @click="create()">Mutasd</button>
-        <button @click="check()">asdasfd</button>
     </div>
 </div>
 </template>
@@ -36,9 +35,6 @@ export default{
             const jsonData = JSON.stringify(this.petData);
             console.log(jsonData);
             FetchHelper.createPet(jsonData);
-        },
-        check(){
-            console.log(sessionStorage.getItem('mypet'));
         }
     },
     async mounted(){

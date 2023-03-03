@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             <h2 class="text-center">
-                Tápláltság: {{resp.energy}}/5
+                Tápláltság: {{resp.sate}}/5
             </h2>
         </div>
         <div class="row pb-2">

@@ -4,11 +4,18 @@ import FeedView from "@/views/FeedView.vue";
 import PlayView from "@/views/PlayView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import LoginView from "@/views/LoginView.vue";
-import CreateView from "@/views/CreateView.vue"
+import CreateView from "@/views/CreateView.vue";
+import StartView from "@/views/StartView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      name:'StartPage',
+      path:'/',
+      component: StartView
+    }
+    ,
     {
       name:'Index',
       path:'/index',

@@ -22,32 +22,29 @@
                     <img src="https://via.placeholder.com/150" class="w-100">
             </div>
             <div class="col-6">
-                <p class="text-end">
-                    Felhasználó: Admin
-                </p>
                 <p>
                     Név: {{valasz.name}}
                 </p>
                 <p>
-                    Típus: {{ valasz.type.type }}
+                    Típus: {{ valasz.type }}
                 </p>
                 <p>
-                    Kor: {{ eletkor }}
+                    Kor: {{ valasz.birth_date }}
                 </p>
                 <p>
-                    Tápláltság: 76/100
+                    Tápláltság: {{valasz.sate}}/5
                 </p>
                 <p>
-                    Egészség: 84/100
+                    Egészség: {{  valasz.wellbeing}}/5
                 </p>
                 <p>
-                    Energia: 55/100
+                    Energia: {{valasz.energy}}/5
                 </p>
                 <p>
-                    Játékosság: 99/100
+                    Játékosság: {{ valasz.happiness }}/5
                 </p>
                 <p>
-                    Vadászat: 12/100
+                    Vadászat: {{valasz.fittness}}/5
                 </p>
             </div>
         </div>
@@ -82,12 +79,18 @@ export default{
         }
     },
     async mounted(){
+        if(sessionStorage.getItem('mypet')===null)
+        {
         this.token = sessionStorage.getItem('token');
         FetchHelper.initialize(this.token);
-        this.valasz = (await FetchHelper.getMyPets()).data;
+        this.valasz = (await FetchHelper.getMyPets()).data[0];
         console.log(this.valasz);
-        sessionStorage.setItem('mypet',this.valasz);
-        eletkor = Math.floor((new Date().getTime() - valasz.birth_date)/(1000*60*60*24));
+        sessionStorage.setItem('mypet',JSON.stringify(this.valasz));
+        }
+        else
+        {            
+            this.valasz = JSON.parse(sessionStorage.getItem('mypet'));
+        }
     }
 }
 </script>
