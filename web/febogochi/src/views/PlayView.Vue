@@ -40,7 +40,7 @@ export default{
         }
     },
     mounted(){
-        this.token = localStorage.getItem('token');
+        this.token = sessionStorage.getItem('token');
         
     }
 }

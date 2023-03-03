@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             <h2 class="text-center">
-                Tápláltság: {{resp.energy}}/100
+                Tápláltság: {{resp.energy}}/5
             </h2>
         </div>
         <div class="row pb-2">
@@ -45,7 +45,7 @@ export default{
         }
     },
     async mounted(){
-        this.token = localStorage.getItem('token');
+        this.token = sessionStorage.getItem('token');
         FetchHelper.initialize(this.token);
         this.resp = (await FetchHelper.getMyPets()).data[0];
     },

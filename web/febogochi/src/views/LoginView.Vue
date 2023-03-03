@@ -39,7 +39,7 @@ export default{
     Login(){
       const jsonData = JSON.stringify(this.loginData);
       login.post('login',jsonData)
-      .then(response=>localStorage.setItem('token',response.data.token))
+      .then(response=>sessionStorage.setItem('token',response.data.token))
       .catch(error=> alert(error));
       router.push("/");
     }
