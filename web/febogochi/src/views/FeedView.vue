@@ -23,7 +23,7 @@
 
             </div>
             <div class="col-3">
-                <button class="btn btn-primary w-100"><router-link class="nav-link active" aria-current="page" to="/">Vissza a főoldalra</router-link></button>
+                <button class="btn btn-primary w-100"><router-link class="nav-link active" aria-current="page" to="/index">Vissza a főoldalra</router-link></button>
             </div>
         </div>
     </div>
@@ -41,14 +41,14 @@ export default{
     methods:{
         async Eat(){
             this.resp = (await FetchHelper.MyPetDoAction(this.resp.id,"eat")).data;
-            sessionStorage.setItem('mypet',this.resp);
+            sessionStorage.setItem('mypet',JSON.stringify(this.resp));
             alert("Sikeres etetés!");
         }
     },
     mounted(){
         this.token = sessionStorage.getItem('token');
         FetchHelper.initialize(this.token);
-        this.resp = sessionStorage.getItem('mypet');
+        this.resp = JSON.parse(sessionStorage.getItem('mypet'));
     },
     name: "FeedView"
 }

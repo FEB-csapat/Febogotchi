@@ -10,11 +10,11 @@
             </div>
 
             <div class="col-3">
-                <input type="button" class="btn btn-primary w-100" value="Alszik">
+                <input type="button" class="btn btn-primary w-100" value="Alszik" @click="Sleep">
             </div>
 
             <div class="col-3">
-                <input type="button" class="btn btn-primary w-100" value="Vadászik">
+                <input type="button" class="btn btn-primary w-100" value="Vadászik" @click="Hunt">
             </div>
         </div>
         <div class="row mb-2">
@@ -23,29 +23,35 @@
             </div>
             <div class="col-6">
                 <p>
-                    Név: {{valasz.name}}
+                    Név: {{resp.name}}
                 </p>
                 <p>
-                    Típus: {{ valasz.type }}
+                    Típus: {{ resp.type }}
                 </p>
                 <p>
-                    Kor: {{ valasz.birth_date }}
+                    Kor: {{ resp.birth_date }}
                 </p>
                 <p>
-                    Tápláltság: {{valasz.sate}}/5
+                    Tápláltság: {{resp.sate}}/5
                 </p>
                 <p>
-                    Egészség: {{  valasz.wellbeing}}/5
+                    Egészség: {{  resp.wellbeing}}/5
                 </p>
                 <p>
-                    Energia: {{valasz.energy}}/5
+                    Energia: {{resp.energy}}/5
                 </p>
                 <p>
-                    Játékosság: {{ valasz.happiness }}/5
+                    Játékosság: {{ resp.happiness }}/5
                 </p>
                 <p>
-                    Vadászat: {{valasz.fittness}}/5
+                    Vadászat: {{resp.fittness}}/5
                 </p>
+                <p>
+                    Jelenlegi állapot: {{ resp.status }}
+                </p>
+                <p>
+                    Időtartam: {{ resp.status }}
+                </p>    
             </div>
         </div>
         <div class="row pb-2">
@@ -61,35 +67,43 @@
 
 <script>
 import { FetchHelper } from '../utils/https.mjs';
+
 export default{
     name: "IndexView",
     data(){
         return{
-            valasz: [],
+            resp: [],
             token:"",
             eletkor:0
         }      
     },
     methods:{
         showData(){
-            console.log(this.valasz);
+            console.log(this.resp);
         },
-        Hunt(){
-
+        async Hunt(){
+            this.resp = (await FetchHelper.MyPetDoAction(this.resp.id,"hunt")).data;
+            sessionStorage.setItem('mypet',JSON.stringify(this.resp));
+            alert("Sikeres vadászat!");
+        },
+        async Sleep(){
+            this.resp = (await FetchHelper.MyPetDoAction(this.resp.id,"sleep")).data;
+            sessionStorage.setItem('mypet',JSON.stringify(this.resp));
+            alert("Sikeres alvás!");
         }
     },
     async mounted(){
-        if(sessionStorage.getItem('mypet')===null)
-        {
         this.token = sessionStorage.getItem('token');
         FetchHelper.initialize(this.token);
-        this.valasz = (await FetchHelper.getMyPets()).data[0];
-        console.log(this.valasz);
-        sessionStorage.setItem('mypet',JSON.stringify(this.valasz));
+        if(sessionStorage.getItem('mypet')===null)
+        {
+        this.resp = (await FetchHelper.getMyPets()).data[0];
+        console.log(this.resp);
+        sessionStorage.setItem('mypet',JSON.stringify(this.resp));
         }
         else
         {            
-            this.valasz = JSON.parse(sessionStorage.getItem('mypet'));
+            this.resp = JSON.parse(sessionStorage.getItem('mypet'));
         }
     }
 }
