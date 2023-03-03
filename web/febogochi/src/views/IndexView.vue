@@ -59,13 +59,14 @@
 
             </div>
             <div class="col-3">
-                <input type="button" class="btn btn-danger w-100" value="Kijelentkezés" @click="showData()">
+                <input type="button" class="btn btn-danger w-100" value="Kijelentkezés" @click="logOut">
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import router from '../router';
 import { FetchHelper } from '../utils/https.mjs';
 
 export default{
@@ -90,6 +91,10 @@ export default{
             this.resp = (await FetchHelper.MyPetDoAction(this.resp.id,"sleep")).data;
             sessionStorage.setItem('mypet',JSON.stringify(this.resp));
             alert("Sikeres alvás!");
+        },
+        logOut(){
+            router.push('/login');
+            sessionStorage.clear();
         }
     },
     async mounted(){

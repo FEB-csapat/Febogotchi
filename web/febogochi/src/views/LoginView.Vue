@@ -12,11 +12,12 @@
     <div id="AccountHelp" class="form-text">Soha ne ossza meg bejelentkezési adatait senkivel!</div>
   </div>
   <div>
-  <button type="submit" class="btn btn-primary mb-3" @click="Login">bejelentkezés</button>
+    <button type="submit" class="btn btn-primary mb-3" @click.prevent="Login">bejelentkezés</button>
   <button class="btn btn-primary mb-3 float-end"><router-link class="nav-link active" aria-current="page" to="/register">Regisztráció</router-link></button>
 
   </div>
 </form>
+
     </div>
 </div>
 </template>
@@ -40,8 +41,8 @@ export default{
       const jsonData = JSON.stringify(this.loginData);
       login.post('login',jsonData)
       .then(response=>sessionStorage.setItem('token',response.data.token))
+      .then(()=>{router.push('/index');})
       .catch(error=> alert(error));
-      router.push("/index");
     }
   },
   computed:{
