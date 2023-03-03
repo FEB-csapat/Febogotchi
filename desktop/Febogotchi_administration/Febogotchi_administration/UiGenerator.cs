@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
-using System.Numerics;
 
 namespace Febogotchi_administration
 {
@@ -23,9 +22,11 @@ namespace Febogotchi_administration
         bool containsnumeric = false;
         bool containsupper = false;
         private Button createuser;
-        public UiGenerator(Grid ToRequest)
+        public string Token { get; set; }
+        public UiGenerator(Grid ToRequest,string token)
         {
             AdministrationGrid = ToRequest;
+            Token = token;
         }
         private void ClearGrid()
         {
@@ -402,7 +403,7 @@ namespace Febogotchi_administration
         private void createuser_Click(object sender, RoutedEventArgs e)
         {
             ApiSender apiSender = new ApiSender();
-            apiSender.CreateUser(UserName.Text, password.Text, "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYjE5Yzk0NTAxYWExMDdlNDk1MzIxNGEzNDY3MWQ2ODE1NzI4NTJkNTQ1YmE1MWQ4ZmJmZjk3MDEyZjQ3ZDc5YzBjMGNjNjJlNzIxNTg5NjEiLCJpYXQiOjE2Nzc3NTk2MDkuODg2MDk3LCJuYmYiOjE2Nzc3NTk2MDkuODg2MSwiZXhwIjoxNzA5MzgyMDA5LjgyNTcxOSwic3ViIjoiMiIsInNjb3BlcyI6W119.E5eRxRcSvW3UKvQTkHq4aL0UzFRNUGny4tUGv-4nSdSeU8dTUS1IMCNj8j4hXQ6LWFYYNeHiyY4utP4zvjkCyC-K5jOPZhOlpaka6xsX5IrRUmerRUGlYtFMrW0tFdjGbr1ziN-VaPuLNLNZf0DttLw-I5oj5fZ-guY4eLFAjB7WTdIkRIUSRJIneLHgkz9Ky781iOxgU57nEZymXoO6SMIgbegmwHzUGHIajInKY9kgg6KYojNmHaEeV9XlKL1WQ0DEpWiNWhWOOO8Ki0PTxq8EkMf5tfMhy-OWN5jIeyFdn6xPtfITgKSfyFJLFU1w9YTVQjCRQxURFwLSOIinDN5BHk43zLSRZJa3tGdRLeJxDAkSDTlCGAo4oXRP4ud2NCzLxyIWlq1g0dytXw9vY7gYgazzLS8cm4KJHuvTCIxAkoOWDlIhPROhzg1xllQGre5dTbX3CocGbparuLIk5a1ScrHp7SpOc68tce3JaKSkYDHXlQzlE2-x1RLhjoNMORq3APh2qOKjMzXM6YHid-TyYZDf8x09-HGIEXIJ9y5cWuqeBpJdTxokH81Tz4N0GjSkpD0AV3Yd9JyBE18V6rsncdfIV-4x3E8G4ix-Nzz45mi7QZgLLpevfs2azD4Wp5BNL-dbglLHuJdi5G8x1COEa3lj7pSK80ZifOlcTWQ");
+            apiSender.CreateUser(UserName.Text, password.Text, Token);
         }
     }
 }

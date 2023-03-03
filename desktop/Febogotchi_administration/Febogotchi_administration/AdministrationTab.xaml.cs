@@ -21,12 +21,12 @@ namespace Febogotchi_administration
     {
 
         
-        public AdministrationTab(int index)
+        public AdministrationTab(int index,string token)
         {
             
             InitializeComponent();
             DataContext = this.DataContext;
-            UiGenerator UiTab = new UiGenerator(AdministrationGrid);
+            UiGenerator UiTab = new UiGenerator(AdministrationGrid,token);
             switch (index)
             {
                 case 1:

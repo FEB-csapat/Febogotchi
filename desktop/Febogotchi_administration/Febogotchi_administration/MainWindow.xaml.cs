@@ -20,33 +20,35 @@ namespace Febogotchi_administration
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public string token { get; set; }
+        public MainWindow(string token)
         {
             InitializeComponent();
+            this.token = token;
         }
 
         private void NewEntity_Click(object sender, RoutedEventArgs e)
         {
-            AdministrationTab EntityTab = new AdministrationTab(1);
+            AdministrationTab EntityTab = new AdministrationTab(1,token);
             EntityTab.Show();
         }
 
         private void UserNewPassword_Click(object sender, RoutedEventArgs e)
         {
-            AdministrationTab EntityTab = new AdministrationTab(2);
-            EntityTab.Show();
+            AdministrationTab ModifyUser = new AdministrationTab(2, token);
+            ModifyUser.Show();
         }
 
         private void ListUsers_Click(object sender, RoutedEventArgs e)
         {
-            AdministrationTab EntityTab = new AdministrationTab(3);
-            EntityTab.Show();
+            AdministrationTab ListUsers = new AdministrationTab(3, token);
+            ListUsers.Show();
         }
 
         private void CreateUser_Click(object sender, RoutedEventArgs e)
         {
-            AdministrationTab EntityTab = new AdministrationTab(4);
-            EntityTab.Show();
+            AdministrationTab CreateUser = new AdministrationTab(4, token);
+            CreateUser.Show();
         }
     }
 }
