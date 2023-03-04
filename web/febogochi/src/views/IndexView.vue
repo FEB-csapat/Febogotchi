@@ -1,4 +1,6 @@
+
 <template>
+
 <div class="container bg-secondary rounded-2 bg-opacity-50">
         <div class="row mb-5 mt-2 pt-2">
             <div class="col-3">
@@ -19,7 +21,7 @@
         </div>
         <div class="row mb-2">
             <div class="col-6">
-                    <img src="https://via.placeholder.com/150" class="w-100">
+                    <img src="../images/cat_1.png" class="w-100" style="image-rendering: pixelated;">
             </div>
             <div class="col-6">
                 <p>
@@ -93,7 +95,7 @@ export default{
             alert("Sikeres alvás!");
         },
         logOut(){
-            router.push('/login');
+            router.push('/');
             sessionStorage.clear();
         }
     },

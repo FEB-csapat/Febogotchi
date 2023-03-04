@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="container bg-secondary rounded-2 bg-opacity-50 p-3 m-4">
     <div class="row">
         <form>
             <div class="mb-3">
@@ -8,10 +8,15 @@
             </div>
             <div class="mb-3">
                 <label for="pettype" class="form-label">Mi legyen az állat típusa?</label>
-                <select id="pettype" v-model="selectedtype" class="from-select">
-                    <option value=""> --Válassz egy típust!-- </option>
-                    <option v-for="(type, index) in avibtypes" :key="index" :value="type.id" >{{type.type}}</option>
-                </select>
+                <select>
+                    <img src="../images/cat_1.png" class="w-100" style="image-rendering: pixelated;">
+                    <option value='cat_1' style="background-image:url('../images/cat_1.png');">Macska 1</option>
+                    <option value='cat_2' style="background-image:url('../images/cat_2.png');">Macska 2</option>
+                    <option value='dog_1' style="background-image:url('../images/dog_1.png');">Kutya 1</option>
+                    <option value='dog_2' style="background-image:url('../images/dog_2.png');">Kutya 2</option>
+                </select> 
+
+                <img src="{{this.selectedtype}}.png" alt="">
             </div>
             <button class="btn btn-success form-control" @click.prevent="create()">Állat létrehozása</button>
         </form>
@@ -26,7 +31,7 @@ export default{
     data(){
         return{
             petname:"",
-            selectedtype:0,
+            selectedtype:'dog_1',
             avibtypes:[],
             token:""
         }
