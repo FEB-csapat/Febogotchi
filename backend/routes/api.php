@@ -77,7 +77,10 @@ Route::get('/pet_statuses/{id}', [UniversalController::class, "showPetStatus"])
 */
 Route::middleware(['auth:api', 'role:user|admin'])->group(function () {
 
-    Route::get('/me/pets', [MeController::class, "indexPets"])
+    Route::get('/me/info', [MeController::class, "showMe"])
+        ->name("me.show");
+
+    Route::get('/me/pets2', [MeController::class, "indexPets"])
         ->name("me.pets.index");
 
     Route::get('/me/pets/{id}', [MeController::class, "showPet"])
