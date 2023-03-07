@@ -8,12 +8,12 @@
             </div>
             <div class="mb-3">
                 <label for="pettype" class="form-label">Mi legyen az állat típusa?</label>
-                <select>
+                <select v-model="selectedtype">
                     <img src="../images/cat_1.png" class="w-100" style="image-rendering: pixelated;">
-                    <option value='cat_1' style="background-image:url('../images/cat_1.png');">Macska 1</option>
-                    <option value='cat_2' style="background-image:url('../images/cat_2.png');">Macska 2</option>
-                    <option value='dog_1' style="background-image:url('../images/dog_1.png');">Kutya 1</option>
-                    <option value='dog_2' style="background-image:url('../images/dog_2.png');">Kutya 2</option>
+                    <option value='1'  style="background-image:url('../images/cat_1.png');" >Macska 1</option>
+                    <option value='2' style="background-image:url('../images/cat_2.png');">Macska 2</option>
+                    <option value='3' style="background-image:url('../images/dog_1.png');">Kutya 1</option>
+                    <option value='4' style="background-image:url('../images/dog_2.png');">Kutya 2</option>
                 </select> 
 
                 <img src="{{this.selectedtype}}.png" alt="">
@@ -31,7 +31,7 @@ export default{
     data(){
         return{
             petname:"",
-            selectedtype:'dog_1',
+            selectedtype:"",
             avibtypes:[],
             token:""
         }
