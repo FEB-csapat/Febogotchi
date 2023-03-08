@@ -4,18 +4,18 @@
         <form>
           <div class="mb-3">
             <label for="username" class="form-label">Felhasználónév</label>
-            <input type="text" class="form-control" v-model="username">
+            <input id="username_textbox" type="text" class="form-control" v-model="username">
           </div>
           <div class="mb-3">
             <label for="password" class="form-label">Jelszó</label>
-            <input type="password" class="form-control" v-model="password">
+            <input id="password_textbox" type="password" class="form-control" v-model="password">
           </div>
           <div class="mb-3">
             <label for="passwordconfirmation" class="form-label">Jelszó újra</label>
-            <input type="password" class="form-control" v-model="passwordagain">
+            <input id="password_again_textbox" type="password" class="form-control" v-model="passwordagain">
             <div id="AccountHelp" class="form-text">Soha ne ossza meg bejelentkezési adatait senkivel!</div>
           </div>
-          <button type="submit" class="btn btn-primary mb-3" @click.prevent="CheckData()"><router-link class="nav-link active" aria-current="page" to="/">Regisztráció</router-link></button>
+          <button id="submit_button" type="submit" class="btn btn-primary mb-3" @click.prevent="CheckData()"><router-link class="nav-link active" aria-current="page" to="/">Regisztráció</router-link></button>
         </form>
     </div>
 </div>
@@ -50,7 +50,7 @@ export default{
       const jsonData = JSON.stringify(this.loginData)      
        login.post("register",jsonData)
        .then(()=>{if(confirm("Sikeres regisztráció, kérlek jelentkezz be")){router.push("/")}})
-       .catch(error => alert(error));
+       .catch(error => alert(error.response.data.message));
     }
   },
   components:{

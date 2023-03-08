@@ -3,22 +3,22 @@
     <div class="row">
         <form>
             <div class="mb-3">
-                <label for="petname" class="form-label">Mi legyen az állat neve?</label>
-                <input type="text" id="petname" v-model="petname" class="from-control">
+                <label for="petname_textbox" class="form-label">Mi legyen az állat neve?</label>
+                <input id="petname_textbox" type="text" v-model="petname" class="from-control">
             </div>
             <div class="mb-3">
                 <label for="pettype" class="form-label">Mi legyen az állat típusa?</label>
-                <select v-model="selectedtype">
+                <select id="option_selector" v-model="selectedtype">
                     <img src="../images/cat_1.png" class="w-100" style="image-rendering: pixelated;">
-                    <option value='1'  style="background-image:url('../images/cat_1.png');" >Macska 1</option>
-                    <option value='2' style="background-image:url('../images/cat_2.png');">Macska 2</option>
-                    <option value='3' style="background-image:url('../images/dog_1.png');">Kutya 1</option>
-                    <option value='4' style="background-image:url('../images/dog_2.png');">Kutya 2</option>
+                    <option id="cat_1_option" value='1'  style="background-image:url('../images/cat_1.png');" >Macska 1</option>
+                    <option id="cat_2_option" value='2' style="background-image:url('../images/cat_2.png');">Macska 2</option>
+                    <option id="dog_1_option" value='3' style="background-image:url('../images/dog_1.png');">Kutya 1</option>
+                    <option id="dog_2_option" value='4' style="background-image:url('../images/dog_2.png');">Kutya 2</option>
                 </select> 
 
                 <img src="{{this.selectedtype}}.png" alt="">
             </div>
-            <button class="btn btn-success form-control" @click.prevent="create()">Állat létrehozása</button>
+            <button id="create_button" class="btn btn-success form-control" @click.prevent="create()">Állat létrehozása</button>
         </form>
 
     </div>

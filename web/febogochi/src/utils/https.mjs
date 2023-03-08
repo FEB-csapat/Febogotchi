@@ -45,6 +45,6 @@ export class FetchHelper{
             alert("Sikeres létrehozás!");
             router.push('/index');
         })
-        .catch(error=>alert(error));
+        .catch(error=>alert(error.response.data.message));
     }
 }
