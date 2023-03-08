@@ -1,4 +1,6 @@
+
 <template>
+
 <div class="container bg-secondary rounded-2 bg-opacity-50">
         <div class="row mb-5 mt-2 pt-2">
             <div class="col-3">
@@ -10,45 +12,48 @@
             </div>
 
             <div class="col-3">
-                <input type="button" class="btn btn-primary w-100" value="Alszik">
+                <input type="button" class="btn btn-primary w-100" value="Alszik" @click="Sleep">
             </div>
 
             <div class="col-3">
-                <input type="button" class="btn btn-primary w-100" value="Vadászik">
+                <input type="button" class="btn btn-primary w-100" value="Vadászik" @click="Hunt">
             </div>
         </div>
         <div class="row mb-2">
             <div class="col-6">
-                    <img src="https://via.placeholder.com/150" class="w-100">
+                    <img src="../images/cat_1.png" class="w-100" style="image-rendering: pixelated;">
             </div>
             <div class="col-6">
-                <p class="text-end">
-                    Felhasználó: Admin
+                <p>
+                    Név: {{resp.name}}
                 </p>
                 <p>
-                    Név: Blöki
+                    Típus: {{ resp.type }}
                 </p>
                 <p>
-                    Típus: kutya
+                    Kor: {{ resp.birth_date }}
                 </p>
                 <p>
-                    Kor: 67 nap
+                    Tápláltság: {{resp.sate}}/5
                 </p>
                 <p>
-                    Tápláltság: 76/100
+                    Egészség: {{  resp.wellbeing}}/5
                 </p>
                 <p>
-                    Egészség: 84/100
+                    Energia: {{resp.energy}}/5
                 </p>
                 <p>
-                    Energia: 55/100
+                    Játékosság: {{ resp.happiness }}/5
                 </p>
                 <p>
-                    Játékosság: 99/100
+                    Vadászat: {{resp.fittness}}/5
                 </p>
                 <p>
-                    Vadászat: 12/100
+                    Jelenlegi állapot: {{ resp.status }}
                 </p>
+                <p>
+                    Időtartam: {{ resp.status }}
+                </p>    
             </div>
         </div>
         <div class="row pb-2">
@@ -56,33 +61,48 @@
 
             </div>
             <div class="col-3">
-                <input type="button" class="btn btn-danger w-100" value="Kijelentkezés" @click="showData()">
+                <input type="button" class="btn btn-danger w-100" value="Kijelentkezés" @click="logOut">
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import router from '../router';
 import { FetchHelper } from '../utils/https.mjs';
+
 export default{
     name: "IndexView",
     data(){
         return{
-            valasz: []
+            resp: [],
+            token:"",
+            eletkor:0
         }      
     },
     methods:{
-        async getData(){
-            FetchHelper.initialize("asd");
-            this.valasz = (await FetchHelper.getAllUsers()).data;
-            console.log(this.valasz[0].name);
-        },
         showData(){
-            console.log(this.valasz);
+            console.log(this.resp);
+        },
+        async Hunt(){
+            this.resp = (await FetchHelper.MyPetDoAction(this.resp.id,"hunt")).data;
+            sessionStorage.setItem('mypet',JSON.stringify(this.resp));
+            alert("Sikeres vadászat!");
+        },
+        async Sleep(){
+            this.resp = (await FetchHelper.MyPetDoAction(this.resp.id,"sleep")).data;
+            sessionStorage.setItem('mypet',JSON.stringify(this.resp));
+            alert("Sikeres alvás!");
+        },
+        logOut(){
+            router.push('/');
+            sessionStorage.clear();
         }
     },
-    mounted(){
-        this.getData();
+    async mounted(){
+        this.token = sessionStorage.getItem('token');
+        FetchHelper.initialize(this.token);          
+        this.resp = JSON.parse(sessionStorage.getItem('mypet'));
     }
 }
 </script>

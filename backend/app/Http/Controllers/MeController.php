@@ -22,8 +22,8 @@ class MeController extends Controller
         $this->middleware(['auth:api', 'role:user|admin']);
     }
 
-     /**
-     * Display the specified pet.
+    /**
+     * Display the me info.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -33,6 +33,7 @@ class MeController extends Controller
         $user = $request->user();
         return new UserResource($user);
     }
+
 
     /**
      * Display a listing of the pets.

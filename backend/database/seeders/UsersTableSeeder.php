@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
-        $user->assignUserRole();
+        $user->assignAdminRole();
 
         $user = User::factory()->create([
             'pet_id' => 1,
@@ -37,7 +37,7 @@ class UsersTableSeeder extends Seeder
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
-        $user->assignAdminRole();
+        $user->assignUserRole();
 
 
         /*
