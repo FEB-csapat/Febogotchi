@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Hash;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
@@ -18,7 +18,11 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            
+            'name' => 'TestUser',//fake()->name(),
+            'pet_id' => null,
+            'password' => Hash::make('password'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 

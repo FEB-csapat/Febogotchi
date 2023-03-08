@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PetResource;
+use App\Http\Resources\UserResource;
 use App\Models\Pet;
 use Illuminate\Http\Request;
 use App\Http\Requests\Pet\StorePetRequest;
@@ -21,6 +22,17 @@ class MeController extends Controller
         $this->middleware(['auth:api', 'role:user|admin']);
     }
 
+     /**
+     * Display the specified pet.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showMe(Request $request)
+    {
+        $user = $request->user();
+        return new UserResource($user);
+    }
 
     /**
      * Display a listing of the pets.
