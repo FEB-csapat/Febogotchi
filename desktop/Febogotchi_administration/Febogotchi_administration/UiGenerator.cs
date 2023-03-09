@@ -136,7 +136,6 @@ namespace Febogotchi_administration
 
             select.Click += select_Click;
         }
-        
         private void select_Click(object sender, RoutedEventArgs e)
         {
             if (UsersCB.SelectedItem.ToString() != "")
@@ -265,7 +264,7 @@ namespace Febogotchi_administration
                 //    return;
                 //}
                 apiSender = new ApiSender();
-                apiSender.UpdateUser(toupdateindex, UsersCB.SelectedItem.ToString(), password.Text,Token);
+                apiSender.UpdateUser(toupdateindex, _username.Content.ToString(), password.Text,Token);
             }
             else
             {
@@ -431,6 +430,9 @@ namespace Febogotchi_administration
         {
             apiSender = new ApiSender();
             apiSender.CreateUser(UserName.Text, password.Text, Token);
+            UserName.Text = "";
+            password.Text = "";
+            repassword.Text = "";
         }
     }
 }
